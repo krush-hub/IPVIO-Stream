@@ -1,12 +1,23 @@
 package com.ipvio.stream
 
 import android.app.Activity
+import android.app.UiModeManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+
+/** True on TV devices (Android TV / Fire TV): remote control instead of touch, no system bars. */
+fun isTvDevice(ctx: Context): Boolean {
+    if (ctx.packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)) return true
+    val uiMode = (ctx.getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager)?.uiModeType
+    return uiMode == Configuration.UI_MODE_TYPE_TELEVISION
+}
 
 /**
  * Full screen without the system bars (status + navigation) while this is composed.
