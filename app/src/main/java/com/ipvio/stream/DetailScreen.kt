@@ -520,15 +520,14 @@ private fun DetailScreenFull(
                                 }
                             }
                             val inList = Library.isWatch(item.id)
-                            HeroButton(if (inList) "In Meiner Liste" else "Meine Liste", if (inList) AIcon.Check else AIcon.Plus, false, Modifier, bh) { Library.toggleWatch(ctx, item.id) }
+                            HeroIconButton(if (inList) AIcon.Check else AIcon.Plus, Modifier, bh) { Library.toggleWatch(ctx, item.id) }
                             // Round 14: movies and series as favorites (appear under "Favorites")
                             val fav = Library.isFav(item.id)
-                            HeroButton(if (fav) "Favorit" else "Zu Favoriten", if (fav) AIcon.HeartFilled else AIcon.Heart, false, Modifier, bh) { Library.toggleFav(ctx, item.id) }
+                            HeroIconButton(if (fav) AIcon.HeartFilled else AIcon.Heart, Modifier, bh, tint = if (fav) Color(0xFFE50914) else null) { Library.toggleFav(ctx, item.id) }
                             HeroButton("Trailer", AIcon.Play, false, Modifier, bh) {
                                 // T-032: opens YouTube at once (the in-app player showed no picture on test devices)
                                 openTrailer(ctx, meta?.trailerKey, item.title)
                             }
-                            HeroButton("Extern", AIcon.External, false, Modifier, bh) { playUrl?.let { openExternal(ctx, it, item.title) } }
                             // Watched by hand: movie, season, whole series (also reachable per episode: long OK / menu key on the row)
                             // A finished resume point would otherwise keep offering "Continue"
                             fun dropResume(keys: Collection<Long>) {
