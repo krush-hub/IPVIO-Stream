@@ -146,7 +146,8 @@ fun SportTab(live: List<Item>, onPlay: (Item, List<Item>) -> Unit) {
             val pool = live + channels
             games.associate { g ->
                 val auto = all.filter { s ->
-                    (kotlin.math.abs(s.prog.start - g.start) <= 3 * 3600 || (s.live && g.state == 1)) && SportData.matches(g, s.prog.title + " " + s.prog.desc)
+                    val timeOk = kotlin.math.abs(s.prog.start - g.start) <= 3 * 3600 || (s.live && g.state == 1)
+                    timeOk && (SportData.matches(g, s.prog.title + " " + s.prog.desc) || SportWatch.leagueFallback(g, s))
                 }.map { it.ch }.distinctBy { it.id }
                 val fixed = fixes[SportFix.key(g)]?.let { id -> pool.firstOrNull { it.id == id } }
                 g.id + "|" + g.league to (if (fixed != null) listOf(fixed) + auto.filter { it.id != fixed.id } else auto)
