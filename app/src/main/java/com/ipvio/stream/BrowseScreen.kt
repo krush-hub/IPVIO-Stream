@@ -50,6 +50,8 @@ class BrowseState(req0: BrowseReq) {
     var minRi by mutableIntStateOf(0)
     var year by mutableStateOf("Alle")
     var genre by mutableStateOf<String?>(null)
+    /** Provider category (Netflix, HBO …): null = all. */
+    var cat by mutableStateOf<String?>(null)
     var country by mutableStateOf<String?>(null)
     /** Language filter (code from [LangTagLogic], "?" = untagged), null = all. Saved per type in [BrowseLangPrefs]. */
     var lang by mutableStateOf<String?>(null)
@@ -65,7 +67,7 @@ class BrowseState(req0: BrowseReq) {
     internal var lastFacets: Pair<Int, Facets>? = null
 }
 
-internal data class BrowseKey(val sort: Int, val minRi: Int, val year: String, val genre: String?, val country: String?, val ver: Int, val source: Int = -1, val lang: String? = null)
+internal data class BrowseKey(val sort: Int, val minRi: Int, val year: String, val genre: String?, val country: String?, val ver: Int, val source: Int = -1, val lang: String? = null, val cat: String? = null)
 
 /** Choices for the filters (genres, countries, years) – from the titles of the list. */
 internal class Facets(val genres: List<String>, val countries: List<Pair<String, String>>, val years: List<String>)
@@ -151,7 +153,8 @@ private fun filterAndSort(items: List<Item>, k: BrowseKey): List<Item> {
             (k.year == "Alle" || yearMatches(k.year, yearOf(i))) &&
             (k.genre == null || (m != null && Genres.categoriesOf(m).contains(k.genre))) &&
             (k.country == null || (m != null && m.countries.contains(k.country))) &&
-            (k.lang == null || i.lang == k.lang)
+            (k.lang == null || i.lang == k.lang) &&
+            (k.cat == null || i.group == k.cat)
     }
     return when (k.sort) {
         0 -> RecentSortLogic.newestFirst(f) { it.added }   // #22: provider's added date, playlist order without dates
@@ -206,7 +209,12 @@ var restoreIdx by remember { mutableIntStateOf(state.focused) }
     // Restore the saved language once, before the first list is computed
     remember(state) { if (!state.langInit) { state.langInit = true; state.lang = BrowseLangPrefs.get(ctx, browseKind) }; 0 }
     val langOptions = remember(req) { BrowseLangPrefs.available(req.items) }
-    val key = BrowseKey(state.sort, state.minRi, state.year, state.genre, state.country, ver, state.source, state.lang)
+    // Provider categories of this list (Netflix, HBO …), in the playlist order
+    val cats = remember(req) {
+        val order = PlaylistStore.catOrder
+        req.items.map { it.group }.filter { it.isNotBlank() }.distinct().sortedBy { order[it] ?: 1_000_000 }
+    }
+    val key = BrowseKey(state.sort, state.minRi, state.year, state.genre, state.country, ver, state.source, state.lang, state.cat)
     val listOrNull by produceState(state.lastList?.takeIf { state.lastKey == key }, req, key) {
         value = withContext(Dispatchers.Default) { filterAndSort(req.items, key) }.also { state.lastKey = key; state.lastList = it }
     }
@@ -276,6 +284,12 @@ var restoreIdx by remember { mutableIntStateOf(state.focused) }
                         DropdownPill("Sortierung", SORTS[state.sort], SORTS, state.sort,
                             active = state.sort != req.sort, modifier = Modifier.focusRequester(filterFocus), icon = FIcon.Sort) { state.sort = it }
                     }
+                    if (cats.isNotEmpty()) item {
+                        val co = listOf("Alle") + cats
+                        DropdownPill("Kategorie", state.cat ?: "Alle", co, co.indexOf(state.cat).coerceAtLeast(0), active = state.cat != null, icon = FIcon.Genre) {
+                            state.cat = if (it == 0) null else co[it]
+                        }
+                    }
                     item {
                         DropdownPill("Rating", RATING_LABELS[state.minRi], RATING_LABELS, state.minRi, active = state.minRi != 0, icon = FIcon.Rating) { state.minRi = it }
                     }
@@ -313,7 +327,7 @@ var restoreIdx by remember { mutableIntStateOf(state.focused) }
                     }
                     item {
                         FilterPill("Zurücksetzen", false, icon = FIcon.Reset) {
-                            state.minRi = 0; state.year = "Alle"; state.genre = null; state.country = null; state.lang = null; BrowseLangPrefs.set(ctx, browseKind, null); state.source = -1; state.sort = defaultSort(req.sort)
+                            state.minRi = 0; state.year = "Alle"; state.genre = null; state.country = null; state.cat = null; state.lang = null; BrowseLangPrefs.set(ctx, browseKind, null); state.source = -1; state.sort = defaultSort(req.sort)
                         }
                     }
                     // View and grid: rarely needed, hence at the very end
@@ -340,7 +354,7 @@ var restoreIdx by remember { mutableIntStateOf(state.focused) }
                 if (ready && list.isEmpty()) Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     EmptyState(AIcon.Sliders, "Keine Treffer", "Mit diesen Filtern gibt es hier keine Titel.", action = "Filter zurücksetzen") {
                         runCatching { filterFocus.requestFocus() }
-                        state.minRi = 0; state.year = "Alle"; state.genre = null; state.country = null; state.lang = null; BrowseLangPrefs.set(ctx, browseKind, null); state.source = -1; state.sort = defaultSort(req.sort)
+                        state.minRi = 0; state.year = "Alle"; state.genre = null; state.country = null; state.cat = null; state.lang = null; BrowseLangPrefs.set(ctx, browseKind, null); state.source = -1; state.sort = defaultSort(req.sort)
                     }
                 }
                 if (!ready) {
@@ -363,7 +377,7 @@ var restoreIdx by remember { mutableIntStateOf(state.focused) }
                     // info (over the neighbors; in the right columns to the left). Column count follows "View" above.
                     val g = cardGrid(maxWidth, perRow = General.perRow)
                     val land = General.cardArt == 1
-                    val ncols = if (land) intArrayOf(8, 6, 5)[General.cardSize.coerceIn(0, 2)] else if (General.perRow > 0) General.perRow else intArrayOf(10, 8, 6)[General.cardSize.coerceIn(0, 2)]
+                    val ncols = if (land) intArrayOf(8, 6, 5)[General.cardSize.coerceIn(0, 2)] else if (General.perRow > 0) General.perRow else intArrayOf(12, 10, 8)[General.cardSize.coerceIn(0, 2)]
                     val gap = if (land) g.gap else g.posterGap
                     val cardW = (maxWidth - gap * (ncols - 1)) / ncols
                     Box(Modifier.fillMaxSize()) {

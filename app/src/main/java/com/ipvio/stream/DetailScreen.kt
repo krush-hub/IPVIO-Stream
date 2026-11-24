@@ -748,7 +748,7 @@ private fun EpisodeRow(ep: Episode, em: EpMeta?, v: Variant, prog: ResumeLogic.E
     // Round 17b: the selected episode floats forward (glass, shadow, slightly larger) instead of a white frame; the others stay calm
     val sc by androidx.compose.animation.core.animateFloatAsState(if (f) focusScale(1.02f) else 1f, label = "ep")
     Row(
-        modifier.fillMaxWidth().padding(vertical = dpx(6))
+        modifier.fillMaxWidth().padding(vertical = dpx(4))
             .graphicsLayer { scaleX = sc; scaleY = sc; transformOrigin = androidx.compose.ui.graphics.TransformOrigin(0f, 0.5f) }
             .then(if (f) Modifier.shadow(dpx(24), shape, ambientColor = Tok.Lift, spotColor = Tok.Lift) else Modifier)
             .clip(shape).background(if (f) Color(0x1FFFFFFF) else Color(0x08FFFFFF))
@@ -756,19 +756,19 @@ private fun EpisodeRow(ep: Episode, em: EpMeta?, v: Variant, prog: ResumeLogic.E
             .onFocusChanged { f = it.isFocused; if (it.isFocused) onFocus() }
             .favKeys(onToggleSeen)
             .clickable(onClick = onClick)
-            .padding(dpx(14)),
+            .padding(dpx(10)),
         horizontalArrangement = Arrangement.spacedBy(dpx(22)), verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
-            Modifier.width(dpx(300)).height(dpx(169)).clip(RoundedCornerShape(dpx(12)))
+            Modifier.width(dpx(168)).height(dpx(94)).clip(RoundedCornerShape(dpx(12)))
                 .background(Brush.linearGradient(listOf(lerp(Surf2, Accent1, 0.22f), Surf2))),
             contentAlignment = Alignment.Center
         ) {
             if (em?.still != null) AsyncImage(em.still, null, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
-            else Text("E${ep.num}", color = Color.White, fontSize = 26.sp, fontWeight = FontWeight.ExtraBold)
+            else Text("E${ep.num}", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
             // Selected: round play button in the middle
-            if (f) Box(Modifier.align(Alignment.Center).size(dpx(58)).clip(RoundedCornerShape(50)).background(Color(0xEBF4F6FB)), contentAlignment = Alignment.Center) {
-                AppIcon(AIcon.Play, Color(0xFF05070D), size = dpx(26))
+            if (f) Box(Modifier.align(Alignment.Center).size(dpx(44)).clip(RoundedCornerShape(50)).background(Color(0xEBF4F6FB)), contentAlignment = Alignment.Center) {
+                AppIcon(AIcon.Play, Color(0xFF05070D), size = dpx(20))
             }
             // Progress: bar at the bottom, watched = check mark top right
             if (prog != null && prog.done) Box(Modifier.align(Alignment.TopEnd).padding(6.dp)) { Badge("Gesehen", DS.Scrim, Accent2, AIcon.Check) }

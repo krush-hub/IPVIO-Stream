@@ -397,39 +397,6 @@ fun HomeScreen(
     val nowChannels = remember(favLiveHome, histHome, live) {
         (favLiveHome + histHome.filter { it.kind == Kind.LIVE }).distinctBy { it.id }.ifEmpty { homeSafe(live.take(40), noAdult).take(20) }
     }
-    val favVod by remember(byId) { derivedStateOf { Library.favs.mapNotNull { byId[it] }.filter { it.kind != Kind.LIVE } } }
-    val tileImg by produceState(emptyMap<Int, String>(), topM.size, topS.size, favVod.size, watchList.size) {
-        val used = HashSet<String>()
-        val out = HashMap<Int, String>()
-        suspend fun pick(id: Int, list: List<Item>) {
-            for (c in list.take(14)) {
-                val u = MetaRepo.basic(ctx, c)?.backdrop
-                if (u != null && used.add(u)) { out[id] = u; value = HashMap(out); return }
-            }
-        }
-        pick(1, topM); pick(2, topS)
-        pick(MenuLogic.FAVS, favVod.ifEmpty { topM.drop(3) })
-        pick(MenuLogic.MYLIST, watchList.filter { it.kind != Kind.LIVE }.ifEmpty { topS.drop(3) })
-    }
-    val liveLogos = nowChannels.mapNotNull { it.logo }.take(3)
-    // #109: after playback the list is rebuilt and briefly empty; show the last count while it loads instead of 0
-    val lastLive = remember { IntArray(1) }
-    if (live.isNotEmpty()) lastLive[0] = live.size
-    val liveCount = if (live.isEmpty() && PlaylistStore.loading) lastLive[0] else live.size
-    // #109: the same for movies and series (their lists are rebuilt after playback as well)
-    val lastMovies = remember { IntArray(1) }
-    val lastSeries = remember { IntArray(1) }
-    if (movies.isNotEmpty()) lastMovies[0] = movies.size
-    if (series.isNotEmpty()) lastSeries[0] = series.size
-    val movieCount = if (movies.isEmpty() && PlaylistStore.loading) lastMovies[0] else movies.size
-    val seriesCount = if (series.isEmpty() && PlaylistStore.loading) lastSeries[0] else series.size
-    val tiles = listOf(
-        QuickTile("Live TV", "$liveCount Sender", 3, Color(0xFF6B3A0E), Color(0xFF2B1708), Color(0xFFF59E0B), logos = liveLogos) { onTab(3) },
-        QuickTile("Filme", "$movieCount Filme", 1, Color(0xFF1E3A8A), Color(0xFF0F1B45), Color(0xFF60A5FA), image = tileImg[1]) { onTab(1) },
-        QuickTile("Serien", "$seriesCount Serien", 2, Color(0xFF4C1D95), Color(0xFF22104A), Color(0xFFC084FC), image = tileImg[2]) { onTab(2) },
-        QuickTile("Favoriten", "Deine Auswahl", 7, Color(0xFF7F1D1D), Color(0xFF3A0B0B), Color(0xFFFB7185), image = tileImg[MenuLogic.FAVS]) { onTab(MenuLogic.FAVS) },
-        QuickTile("Meine Liste", "${watchList.count { it.kind != Kind.LIVE }} Titel", 8, Color(0xFF134E4A), Color(0xFF082725), Color(0xFF2DD4BF), image = tileImg[MenuLogic.MYLIST]) { onTab(MenuLogic.MYLIST) }
-    )
     DisposableEffect(Unit) { onDispose { HomeReturn.returning = true } }
 
     LaunchedEffect(candidates) {
@@ -547,7 +514,7 @@ fun HomeScreen(
     // Info at the top only for the normal title rows (from "Top 10 today" or "Newly added"), not for tiles, Live TV, Continue watching,
     // My list and Recently watched. And only if the row is low enough not to cover the info.
     val listTop = remember { floatArrayOf(0f) }
-    val noBb = remember { setOf("hero", "top", "tiles", "resume", "chnow", "hero1", "hero2", "top1", "top2", "res1", "res2", "wl1", "wl2", "hr1", "hr2", "hint1", "hint2") }
+    val noBb = remember { setOf("hero", "top", "resume", "chnow", "hero1", "hero2", "top1", "top2", "res1", "res2", "wl1", "wl2", "hr1", "hr2", "hint1", "hint2") }
     val bbOnState = remember(tab) {
         derivedStateOf {
             if (!bbTab || !Billboard.cardFocus || Billboard.focused == null) return@derivedStateOf false
@@ -660,7 +627,6 @@ fun HomeScreen(
                                 if (editing) item(key = "eb$blockId") { HomeEditBar(ctx, blockId) }
                                 if (!HomeLayout.shown(blockId)) continue
                                 when (blockId) {
-                                    "tiles" -> { item(key = "tiles") { QuickTiles(tiles) } }
                                     "clock" -> { item(key = "clock") { ClockWidget() } }
                                     // Continue watching directly under the tiles: whoever watches a lot wants to continue in few clicks
                                     "resume" -> { if (resumeList.isNotEmpty()) item(key = "resume") { ResumeRow(resumeList, cardW, onResume) } }

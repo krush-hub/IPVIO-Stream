@@ -76,6 +76,7 @@ Sortierung¦Ordenação
 Rating¦Avaliação
 Jahr¦Ano
 Genre¦Gênero
+Kategorie¦Categoria
 Land¦País
 Zurücksetzen¦Redefinir
 Raster¦Grade
