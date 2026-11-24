@@ -51,8 +51,10 @@ object SportData {
     const val KIND_GOLF = 4
     const val KIND_CRICKET = 5
 
-    /** [sport] = key of [SPORTS]; [kind] decides how the scoreboard is read. */
-    class League(val name: String, val path: String, val catName: String, val sport: String = "soccer", val kind: Int = KIND_TEAM)
+    /** [sport] = key of [SPORTS]; [kind] decides how the scoreboard is read. [alias] = Portuguese names of the
+     *  competition as they appear in Brazilian EPG titles ("|" separated), used to link a channel to a game
+     *  when the EPG names the league instead of the teams (see [leagueOfText]). */
+    class League(val name: String, val path: String, val catName: String, val sport: String = "soccer", val kind: Int = KIND_TEAM, val alias: String = "")
 
     /** The ten sports of the hub in display order (key, German label). */
     class Sport(val key: String, val label: String)
@@ -73,7 +75,7 @@ object SportData {
         League("Championship", "soccer/eng.2", "Fußball"),
         League("League One", "soccer/eng.3", "Fußball"),
         League("League Two", "soccer/eng.4", "Fußball"),
-        League("FA Cup", "soccer/eng.fa", "Fußball"),
+        League("FA Cup", "soccer/eng.fa", "Fußball", alias = "copa da inglaterra"),
         League("EFL Cup", "soccer/eng.league_cup", "Fußball"),
         League("Scottish Premiership", "soccer/sco.1", "Fußball"),
         League("Scottish Championship", "soccer/sco.2", "Fußball"),
@@ -82,15 +84,14 @@ object SportData {
         League("Primeira Liga", "soccer/por.1", "Fußball"),
         League("Süper Lig", "soccer/tur.1", "Fußball"),
         League("Belgian Pro League", "soccer/bel.1", "Fußball"),
-        League("Conference League", "soccer/uefa.europa.conf", "Fußball"),
-        League("DFB-Pokal", "soccer/ger.dfb_pokal", "Fußball"),
-        League("Copa del Rey", "soccer/esp.copa_del_rey", "Fußball"),
-        League("Coppa Italia", "soccer/ita.coppa_italia", "Fußball"),
-        League("Coupe de France", "soccer/fra.coupe_de_france", "Fußball"),
+        League("Conference League", "soccer/uefa.europa.conf", "Fußball", alias = "liga conferencia"),
+        League("DFB-Pokal", "soccer/ger.dfb_pokal", "Fußball", alias = "copa da alemanha"),
+        League("Copa del Rey", "soccer/esp.copa_del_rey", "Fußball", alias = "copa do rei"),
+        League("Coppa Italia", "soccer/ita.coppa_italia", "Fußball", alias = "copa da italia"),
+        League("Coupe de France", "soccer/fra.coupe_de_france", "Fußball", alias = "copa da franca"),
         League("Nations League", "soccer/uefa.nations", "Fußball"),
         League("European Championship", "soccer/uefa.euro", "Fußball"),
         League("World Cup", "soccer/fifa.world", "Fußball"),
-        League("Copa Libertadores", "soccer/conmebol.libertadores", "Fußball"),
         League("NWSL", "soccer/usa.nwsl", "Fußball"),
         League("WNBA", "basketball/wnba", "Basketball", "basketball"),
         League("College Basketball (men)", "basketball/mens-college-basketball", "Basketball", "basketball"),
@@ -99,14 +100,17 @@ object SportData {
     )
 
     val LEAGUES = listOf(
-        League("Bundesliga", "soccer/ger.1", "Fußball"),
+        League("Bundesliga", "soccer/ger.1", "Fußball", alias = "campeonato alemao"),
         League("2. Bundesliga", "soccer/ger.2", "Fußball"),
-        League("Premier League", "soccer/eng.1", "Fußball"),
-        League("LaLiga", "soccer/esp.1", "Fußball"),
-        League("Serie A", "soccer/ita.1", "Fußball"),
-        League("Ligue 1", "soccer/fra.1", "Fußball"),
-        League("Champions League", "soccer/uefa.champions", "Fußball"),
-        League("Europa League", "soccer/uefa.europa", "Fußball"),
+        League("Premier League", "soccer/eng.1", "Fußball", alias = "campeonato ingles"),
+        League("LaLiga", "soccer/esp.1", "Fußball", alias = "campeonato espanhol"),
+        League("Serie A", "soccer/ita.1", "Fußball", alias = "campeonato italiano"),
+        League("Ligue 1", "soccer/fra.1", "Fußball", alias = "campeonato frances"),
+        League("Champions League", "soccer/uefa.champions", "Fußball", alias = "liga dos campeoes"),
+        League("Europa League", "soccer/uefa.europa", "Fußball", alias = "liga europa"),
+        League("Brasileirão Série A", "soccer/bra.1", "Fußball", alias = "brasileirao|campeonato brasileiro"),
+        League("Brasileirão Série B", "soccer/bra.2", "Fußball", alias = "brasileirao serie b"),
+        League("Copa Libertadores", "soccer/conmebol.libertadores", "Fußball", alias = "libertadores"),
         // Wishbox: North American leagues (same ESPN scoreboard as the others)
         League("MLS", "soccer/usa.1", "Fußball"),
         League("Liga MX", "soccer/mex.1", "Fußball"),
@@ -521,6 +525,33 @@ object SportData {
         return keysCached(g.home).any { has(n, it) } && keysCached(g.away).any { has(n, it) }
     }
 
+    /** Search terms for a league: its normalized name plus its Portuguese aliases (if any). */
+    private val leagueTermsCache: List<Pair<League, List<String>>> by lazy {
+        LEAGUES.map { l ->
+            val terms = ArrayList<String>()
+            terms.add(norm(l.name))
+            l.alias.split("|").map { norm(it) }.filter { it.isNotBlank() }.forEach { terms.add(it) }
+            l to terms.distinct()
+        }
+    }
+
+    /**
+     * The single league named by an EPG title/description (league name or Portuguese alias, as a whole phrase),
+     * or null when none — or more than one — league matches. Ambiguity (e.g. "Brasileirão Série A" also contains
+     * "Serie A") returns null on purpose: a generic title must never link a game of the wrong competition.
+     */
+    fun leagueOfText(text: String): League? {
+        val n = normCached(text)
+        var found: League? = null
+        for ((l, terms) in leagueTermsCache) {
+            if (terms.any { has(n, it) }) {
+                if (found != null) return null
+                found = l
+            }
+        }
+        return found
+    }
+
     private val chanCache = HashMap<String, Pair<Int, List<Item>>>()
 
     /** Channels of [live] whose name shows this game. The result is remembered per game as long as the channel list stays the same. */
@@ -595,6 +626,13 @@ object SportLeagues {
         if (prefs(c).getInt("seed", 0) < 1) {
             SportData.EXTRA_NAMES.forEach { if (it !in off) off.add(it) }
             prefs(c).edit().putString("off", off.joinToString("|")).putInt("seed", 1).apply()
+        }
+        // v1.0.11: Copa Libertadores moved from the extra leagues (off by default) to the main list:
+        // switch it back on for everyone (it was only ever off because of the seed above, unless the user
+        // switched it on themselves — then it is not in `off` and this is a no-op).
+        if (prefs(c).getInt("seed", 0) < 2) {
+            off.remove("Copa Libertadores")
+            prefs(c).edit().putString("off", off.joinToString("|")).putInt("seed", 2).apply()
         }
     }
 
