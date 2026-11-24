@@ -22,7 +22,7 @@ object SettingsReset {
         when (page) {
             SettingsResetLogic.GENERAL -> resetPhoneOrientation(ctx)
             SettingsResetLogic.VIEW -> {
-                SidebarPrefs.set(ctx, SidebarPrefs.LEFT, false)
+                SidebarPrefs.set(ctx, SidebarPrefs.TOP, true)
                 BrowsePrefs.set(ctx, true)
                 CatPrefs.set(ctx, true)
             }

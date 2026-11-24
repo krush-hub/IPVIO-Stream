@@ -1,10 +1,12 @@
 package com.ipvio.stream
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
@@ -12,6 +14,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.pointerInput
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -36,7 +39,14 @@ private class LongOk {
 private fun Modifier.longOkKeys(onMenu: () -> Unit, onLong: () -> Unit): Modifier {
     val st = remember { LongOk() }
     val scope = rememberCoroutineScope()
-    return this.onPreviewKeyEvent { e ->
+    // Toque: segurar o dedo faz o mesmo que segurar OK no controle (menus, favoritos).
+    // Sem isso, no celular não havia como abrir nenhum menu nem favoritar nada: não existe
+    // tecla Menu nem OK longo no toque. O toque longo consome o toque, então o clique
+    // normal do elemento não dispara junto.
+    val latestOnLong by rememberUpdatedState(onLong)
+    return this
+        .pointerInput(Unit) { detectTapGestures(onLongPress = { latestOnLong() }) }
+        .onPreviewKeyEvent { e ->
         when {
             e.key == Key.Menu && e.type == KeyEventType.KeyDown -> { onMenu(); true }
             e.key == Key.DirectionCenter && e.type == KeyEventType.KeyDown -> {

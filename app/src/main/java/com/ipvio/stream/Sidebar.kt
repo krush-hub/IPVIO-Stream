@@ -155,8 +155,17 @@ object SidebarPrefs {
 
     fun init(c: android.content.Context) {
         val p = Profiles.sp(c, "ipvio_side")
-        pos = p.getInt("pos", LEFT).coerceIn(LEFT, TOP)
-        labels = p.getBoolean("labels", false)
+        // NexTV: menu fixo no topo, sempre com texto (Início, Filmes, Séries...). Migração única
+        // para quem já tinha o padrão antigo (esquerda, só ícones); depois disso a escolha do
+        // usuário em Configurações > Visual passa a valer.
+        if (!p.contains("nextv_top")) {
+            pos = TOP
+            labels = true
+            p.edit().putInt("pos", TOP).putBoolean("labels", true).putBoolean("nextv_top", true).apply()
+            return
+        }
+        pos = p.getInt("pos", TOP).coerceIn(LEFT, TOP)
+        labels = p.getBoolean("labels", true)
     }
 
     fun set(c: android.content.Context, pos: Int = this.pos, labels: Boolean = this.labels) {
