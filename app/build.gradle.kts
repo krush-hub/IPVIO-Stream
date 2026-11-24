@@ -41,10 +41,10 @@ android {
         // Name under the icon; the debug build overrides it (see buildTypes)
         manifestPlaceholders["appLabel"] = "NexTV"
 
-        buildConfigField("String", "TMDB_KEY", "\"${secret(\"TMDB_KEY\")}\"")
-        buildConfigField("String", "OMDB_KEY", "\"${secret(\"OMDB_KEY\")}\"")
-        buildConfigField("String", "GOOGLE_CLIENT_ID", "\"${secretId(\"GOOGLE_CLIENT_ID\")}\"")
-        buildConfigField("String", "GOOGLE_CLIENT_SECRET", "\"${secretId(\"GOOGLE_CLIENT_SECRET\")}\"")
+        buildConfigField("String", "TMDB_KEY", "\"${secret("TMDB_KEY")}\"")
+        buildConfigField("String", "OMDB_KEY", "\"${secret("OMDB_KEY")}\"")
+        buildConfigField("String", "GOOGLE_CLIENT_ID", "\"${secretId("GOOGLE_CLIENT_ID")}\"")
+        buildConfigField("String", "GOOGLE_CLIENT_SECRET", "\"${secretId("GOOGLE_CLIENT_SECRET")}\"")
     }
 
     signingConfigs {
