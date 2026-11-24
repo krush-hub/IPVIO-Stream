@@ -66,8 +66,6 @@ jobs:
           echo "name=$VN" >> "$GITHUB_OUTPUT"
           echo "code=$VC" >> "$GITHUB_OUTPUT"
 
-
-
       - name: Refuse to overwrite an existing release
         run: |
           if gh release view "v${{ steps.version.outputs.name }}" >/dev/null 2>&1; then
@@ -96,6 +94,7 @@ jobs:
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          TMDB_KEY: ${{ secrets.TMDB_KEY }}
         run: ./gradlew --no-daemon assembleRelease
 
       - name: Verify signature
