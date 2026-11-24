@@ -1,7 +1,6 @@
 package com.ipvio.stream
 
 import android.app.Activity
-import android.app.UiModeManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -15,8 +14,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 /** True on TV devices (Android TV / Fire TV): remote control instead of touch, no system bars. */
 fun isTvDevice(ctx: Context): Boolean {
     if (ctx.packageManager.hasSystemFeature(PackageManager.FEATURE_LEANBACK)) return true
-    val uiMode = (ctx.getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager)?.uiModeType
-    return uiMode == Configuration.UI_MODE_TYPE_TELEVISION
+    // UiModeManager has no uiModeType (it is getCurrentModeType); the configuration is the direct way.
+    return (ctx.resources.configuration.uiMode and Configuration.UI_MODE_TYPE_MASK) == Configuration.UI_MODE_TYPE_TELEVISION
 }
 
 /**
