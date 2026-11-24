@@ -58,7 +58,13 @@ private fun JSONObject.dbl(k: String): Double? =
     if (!has(k) || isNull(k)) null else getDouble(k)
 
 object MetaRepo {
-    private val client = Net.base
+    // Own client with short timeouts: a slow TMDB search must fail fast instead of
+    // holding a gate permit for 15 s and stalling every other cover behind it.
+    private val client = okhttp3.OkHttpClient.Builder()
+        .connectTimeout(5, java.util.concurrent.TimeUnit.SECONDS)
+        .readTimeout(6, java.util.concurrent.TimeUnit.SECONDS)
+        .dns(AppDns)
+        .build()
     /**
      * Cache in two levels so large playlists do not fill the working memory:
      * - [mem]: only the most recently used complete entries (with description, trailer, ratings)
@@ -160,6 +166,8 @@ object MetaRepo {
     private val gate = Semaphore(6)
     private const val IMG = "https://image.tmdb.org/t/p/"
     private const val TTL = 30L * 24 * 3600 * 1000
+    /** A failed TMDB search is retried after a day, not only after the 30-day index TTL */
+    private const val MISS_RETRY_MS = 24L * 3600 * 1000
     /** State of the match search. "Not found" from older states is retried with the better search. */
     private const val MATCH_V = 2
 
@@ -298,7 +306,14 @@ object MetaRepo {
         if (!enabled() || i.kind == Kind.LIVE) return null
         val k = key(i)
         memGet(k)?.let { return it }
-        if (k in misses) return null
+        // A miss is retried after a day: a title that failed once (bad network, TMDB
+        // hiccup, or a name the search could not match yet) gets a second chance
+        // instead of staying coverless for the whole 30-day index TTL.
+        if (k in misses) {
+            val ts = missTs[k] ?: 0L
+            if (System.currentTimeMillis() - ts < MISS_RETRY_MS) return null
+            misses.remove(k); missTs.remove(k); dirty = true
+        }
         load(ctx, k)?.let {
             if (it.tmdbId == -1) { misses.add(k); missTs[k] = System.currentTimeMillis(); dirty = true; return null }
             memPut(k, it); return it

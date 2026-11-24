@@ -160,11 +160,12 @@ fun PosterCard(
     val border by animateColorAsState(if (f) Accent2 else Color.Transparent, label = "pborder")
     val shape = RoundedCornerShape(DS.RadiusM)
     val live = item.kind == Kind.LIVE
+    // The provider cover shows immediately: before, the card waited for the TMDB search
+    // to finish even when the cover was already there, so most cards stayed blank.
     val img: String? = when {
         live -> item.logo
         m?.poster != null -> cardPoster(m.poster)
-        st.done -> item.logo
-        else -> null
+        else -> item.logo
     }
     val posterMod = if (fixedPosterHeight != null) Modifier.fillMaxWidth().height(fixedPosterHeight)
     else Modifier.fillMaxWidth().aspectRatio(2f / 3f)

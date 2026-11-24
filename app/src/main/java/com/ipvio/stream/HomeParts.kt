@@ -746,10 +746,11 @@ fun RowPosterCard(item: Item, baseW: Dp, modifier: Modifier, overlay: Int = 0, a
             .border(1.dp, if (f) Color(0x40FFFFFF) else CardLine, shape)
     ) {
         // Poster at the bottom, the scene image fades in above it with the progress (no crossfade switch)
+        // The provider cover shows immediately: before, the card waited for the TMDB search
+        // to finish even when the cover was already there, so most cards stayed blank.
         val rawImg: String? = when {
             m?.poster != null -> cardPoster(m.poster)
-            st.done -> item.logo
-            else -> null
+            else -> item.logo
         }
         val img = if (rawImg != null && rawImg == failedUrl) null else rawImg
         // Placeholder from the first frame: while the TMDB search runs the card used to be
