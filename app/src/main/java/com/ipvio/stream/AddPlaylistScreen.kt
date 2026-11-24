@@ -169,10 +169,10 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 BrandMark(Modifier.size(36.dp))
                 Text("NexTV", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
-                Text("Playlist hinzufügen", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 14.dp))
+                if (!NexTv.locked) Text("Playlist hinzufügen", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 14.dp))
             }
-            // Many new users ask which link to enter: say clearly that the app brings no content of its own
-            Column(
+            // NexTV travado: login mínimo, sem avisos — só usuário, senha e Entrar.
+            if (!NexTv.locked) Column(
                 Modifier.fillMaxWidth().clip(RoundedCornerShape(DS.RadiusM)).background(Color(0x14FFFFFF)).border(1.dp, Surf2, RoundedCornerShape(DS.RadiusM)).padding(10.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
@@ -211,9 +211,15 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
                         catch (e: Exception) { PlaylistStore.error = "Auf diesem Gerät gibt es keine Dateiauswahl. Lade die Datei über die Handy-Seite rechts hoch." }
                     }
                 }
+            } else if (NexTv.locked) {
+                // Login mínimo NexTV: só usuário, senha e Entrar. Nada de servidor, backups ou avisos.
+                Field(user, { user = it }, "Usuário", inner = Modifier.focusRequester(startFocus))
+                Field(pass, { pass = it }, "Senha", password = !showPass)
+                Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
+                    FocusButton(if (showPass) "Ocultar senha" else "Mostrar senha", compact = true) { showPass = !showPass }
+                }
             } else {
-                if (NexTv.locked) Text("Servidor NexTV: " + NexTv.SERVER, color = Muted, fontSize = 15.sp, raw = true)
-                else Field(host, { host = it }, "Server (z. B. http://server.tld:8080)")
+                Field(host, { host = it }, "Server (z. B. http://server.tld:8080)")
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Field(user, { user = it }, "Benutzername", Modifier.weight(1f))
                     Field(pass, { pass = it }, "Passwort", Modifier.weight(1f), password = !showPass)
@@ -221,11 +227,9 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
                 Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
                     FocusButton(if (showPass) "Passwort verbergen" else "Passwort anzeigen", compact = true) { showPass = !showPass }
                 }
-                if (!NexTv.locked) {
-                    BackupFields(backups)
-                    Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
-                        FocusButton("+ Backup-Server", compact = true) { backups.add("") }
-                    }
+                BackupFields(backups)
+                Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
+                    FocusButton("+ Backup-Server", compact = true) { backups.add("") }
                 }
                 Text(BACKUP_HINT, color = Muted, fontSize = 15.sp)
             }
@@ -251,18 +255,24 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
             // Playlist too big for the memory: offer the language selection right here, instead of a second "Hinzufügen"
             val tooBig = PlaylistStore.error == PlaylistStore.MSG_TOO_BIG || PlaylistStore.error == PlaylistLogic.TOO_BIG_HINT
             Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp, vertical = 5.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (!stalker) FocusButton(Lang.tr(if (nativeUa) "Kennung: NexTV" else "Kennung: VLC"), compact = true) { nativeUa = !nativeUa }
-                if (stalker) FocusButton("STB $stbModel", compact = true) { stbModel = StalkerModelLogic.next(stbModel) }
-                FocusButton(if (PlaylistStore.loading) "Lade…" else "Hinzufügen", primary = true, compact = true) { startLoad(false) }
-                if (tooBig && !PlaylistStore.loading) FocusButton("Sprachen wählen", primary = true, compact = true) { startLoad(true) }
-                if (canCancel) FocusButton("Abbrechen", compact = true) { PlaylistStore.clearPending(ctx); onDone() }
-                // Nothing to add yet (first start): demo mode with sample entries and neutral placeholders, so the UI can be explored.
-                // Settings then offer "Playlist hinzufügen" to leave it.
-                else FocusButton("Weiter ohne Playlist", compact = true) { PlaylistStore.clearPending(ctx); PlaylistStore.error = null; DemoMode.enter(); onDone() }
+                if (NexTv.locked) {
+                    FocusButton(if (PlaylistStore.loading) "Entrando…" else "Entrar", primary = true, compact = true) { startLoad(false) }
+                    if (tooBig && !PlaylistStore.loading) FocusButton("Sprachen wählen", primary = true, compact = true) { startLoad(true) }
+                    if (canCancel) FocusButton("Cancelar", compact = true) { PlaylistStore.clearPending(ctx); onDone() }
+                } else {
+                    if (!stalker) FocusButton(Lang.tr(if (nativeUa) "Kennung: NexTV" else "Kennung: VLC"), compact = true) { nativeUa = !nativeUa }
+                    if (stalker) FocusButton("STB $stbModel", compact = true) { stbModel = StalkerModelLogic.next(stbModel) }
+                    FocusButton(if (PlaylistStore.loading) "Lade…" else "Hinzufügen", primary = true, compact = true) { startLoad(false) }
+                    if (tooBig && !PlaylistStore.loading) FocusButton("Sprachen wählen", primary = true, compact = true) { startLoad(true) }
+                    if (canCancel) FocusButton("Abbrechen", compact = true) { PlaylistStore.clearPending(ctx); onDone() }
+                    // Nothing to add yet (first start): demo mode with sample entries and neutral placeholders, so the UI can be explored.
+                    // Settings then offer "Playlist hinzufügen" to leave it.
+                    else FocusButton("Weiter ohne Playlist", compact = true) { PlaylistStore.clearPending(ctx); PlaylistStore.error = null; DemoMode.enter(); onDone() }
+                }
             }
             // Second device? Take everything over in one step
-            Text("Schon ein anderes Gerät mit NexTV? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.", color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
-            Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
+            if (!NexTv.locked) Text("Schon ein anderes Gerät mit NexTV? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.", color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
+            if (!NexTv.locked) Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
                 FocusButton("Sicherung von anderem Gerät einspielen", compact = true) {
                     try { pickBackup.launch(arrayOf("*/*")) }
                     catch (e: Exception) { PlaylistStore.error = "Auf diesem Gerät gibt es keine Dateiauswahl. Spiele die Sicherung über die Handy-Seite rechts ein." }
@@ -270,7 +280,7 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
             }
         }
         // Right: instructions for input on the phone
-        if (!compact) PhoneCard(Modifier.weight(1f), if (serving && ip != null) "http://" + ip + ":" + receiver.port else null, receiver.code)
+        if (!compact && !NexTv.locked) PhoneCard(Modifier.weight(1f), if (serving && ip != null) "http://" + ip + ":" + receiver.port else null, receiver.code)
     }
     }
 }
