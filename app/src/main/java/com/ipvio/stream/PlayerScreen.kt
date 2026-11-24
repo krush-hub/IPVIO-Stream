@@ -1656,7 +1656,7 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                     }
                 }
 
-                Panel.QUALITY -> PSimplePanel(440.dp, "Videoqualität", back, { closePanel() }, leftBack = panelParent != Panel.NONE) {
+                Panel.QUALITY -> PSimplePanel(320.dp, "Videoqualität", back, { closePanel() }, leftBack = panelParent != Panel.NONE) {
                     val video = remember(tracksVer) { collectTracks(player, C.TRACK_TYPE_VIDEO) }
                     val videoAuto = player.trackSelectionParameters.overrides.keys.none { it.type == C.TRACK_TYPE_VIDEO }
                     // Several sources of the same title (4K/FHD/HD as separate entries): switch by hand here
@@ -1666,8 +1666,11 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                         PColumnHeader("Quelle")
                         val curI = alts.indexOfFirst { it.url == cur.url }.coerceAtLeast(0)
                         alts.forEachIndexed { i, a ->
+                            // Live variants repeat the channel name in the label ("4K · Discovery Channel FHD"):
+                            // show only the quality, so the rows stay short and don't cover the picture.
+                            val rowLabel = a.label.substringBefore("  ·  ").ifBlank { a.quality ?: "Quelle ${i + 1}" }
                             PPanelRow(
-                                a.label.ifBlank { a.quality ?: "Quelle ${i + 1}" }, i == curI,
+                                rowLabel, i == curI,
                                 if (i == curI) Modifier.focusRequester(panelFocus) else Modifier,
                                 trailingIcon = if (DeadLinks.isDead(a.url)) AIcon.Warning else null
                             ) {
