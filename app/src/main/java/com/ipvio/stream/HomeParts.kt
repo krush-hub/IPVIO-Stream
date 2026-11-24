@@ -506,7 +506,9 @@ fun PosterTile(item: Item, modifier: Modifier, reorder: List<Item>? = null, onCl
     val s by animateFloatAsState(if (f) focusScale(1.07f) else 1f, label = "ptile")
     val shape = RoundedCornerShape(dpx(8))
     val rowF = LocalRowFocus.current
-    val dimA by animateFloatAsState(if (rowF && !f) 0.5f else 1f, tween(if (Look.motion == 0) 0 else 320), label = "dim")
+    // Instant dim (was a 320 ms fade): on every row change ~30 cards animated at once,
+    // which stuttered on TV boxes. Same end states, zero per-frame work.
+    val dimA = if (rowF && !f) 0.5f else 1f
     // A URL that failed to load once is not retried: it left a blank, nameless card forever.
     var failedUrl by remember(item.id) { mutableStateOf<String?>(null) }
     val rawImg: String? = when {
@@ -562,7 +564,9 @@ fun LandscapeCard(item: Item, modifier: Modifier, reorder: List<Item>? = null, o
     val s by animateFloatAsState(if (f) focusScale(1.07f) else 1f, label = "land")
     val shape = RoundedCornerShape(dpx(8))
     val rowF = LocalRowFocus.current
-    val dimA by animateFloatAsState(if (rowF && !f) 0.5f else 1f, tween(if (Look.motion == 0) 0 else 320), label = "dim")
+    // Instant dim (was a 320 ms fade): on every row change ~30 cards animated at once,
+    // which stuttered on TV boxes. Same end states, zero per-frame work.
+    val dimA = if (rowF && !f) 0.5f else 1f
     val img = m?.backdrop?.let { cardBackdrop(it) } ?: m?.poster?.let { cardPoster(it) } ?: item.logo
     Box(
         modifier.then(reorderMod).aspectRatio(1.3f).graphicsLayer { scaleX = s; scaleY = s }.focusGlow(f, shape).clip(shape)
@@ -726,7 +730,9 @@ fun RowPosterCard(item: Item, baseW: Dp, modifier: Modifier, overlay: Int = 0, a
     val s by animateFloatAsState(if (fx && (!open || !wide)) focusScale(if (wide) 1.05f else 1.12f) else 1f, label = "ps")
     // 17b: in the selected row the other cards step back
     val rowF = LocalRowFocus.current
-    val dimA by animateFloatAsState(if (rowF && !f) 0.5f else 1f, tween(if (Look.motion == 0) 0 else 320), label = "dim")
+    // Instant dim (was a 320 ms fade): on every row change ~30 cards animated at once,
+    // which stuttered on TV boxes. Same end states, zero per-frame work.
+    val dimA = if (rowF && !f) 0.5f else 1f
     val shape = RoundedCornerShape(dpx(10))
     // The expanded scene image draws its own frame
     // Image only. The focus sits on the poster slot (bottom), not on the wide card: otherwise Right/Left skips
