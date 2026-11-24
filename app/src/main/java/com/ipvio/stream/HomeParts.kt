@@ -507,13 +507,16 @@ fun PosterTile(item: Item, modifier: Modifier, reorder: List<Item>? = null, onCl
     val shape = RoundedCornerShape(dpx(8))
     val rowF = LocalRowFocus.current
     val dimA by animateFloatAsState(if (rowF && !f) 0.5f else 1f, tween(if (Look.motion == 0) 0 else 320), label = "dim")
-    val img: String? = when {
+    // A URL that failed to load once is not retried: it left a blank, nameless card forever.
+    var failedUrl by remember(item.id) { mutableStateOf<String?>(null) }
+    val rawImg: String? = when {
         item.kind == Kind.LIVE -> item.logo
         m?.poster != null -> cardPoster(m.poster)
         // Capa do Xtream já: antes só aparecia depois que o TMDB terminava, e o cartão
         // ficava em branco sem capa nem nome enquanto carregava.
         else -> item.logo
     }
+    val img = if (rawImg != null && rawImg == failedUrl) null else rawImg
     Box(
         modifier.then(reorderMod).aspectRatio(2f / 3f).graphicsLayer { scaleX = s; scaleY = s }.focusGlow(f, shape).clip(shape)
             .background(Brush.linearGradient(listOf(colorFor(item).copy(alpha = .75f), Surf2)))
@@ -526,7 +529,21 @@ fun PosterTile(item: Item, modifier: Modifier, reorder: List<Item>? = null, onCl
         if (favMenu && reorder != null) FavReorderMenu(item, reorder) { favMenu = false }
         // Sem capa nenhuma, mostra o placeholder com o nome na hora (antes só depois do TMDB).
         if (img == null) ArtPlaceholder(item, Modifier.fillMaxSize())
-        if (img != null) AsyncImage(img, item.title, Modifier.fillMaxSize(), contentScale = if (item.kind == Kind.LIVE) ContentScale.Fit else ContentScale.Crop)
+        if (img != null) AsyncImage(img, item.title, Modifier.fillMaxSize(), contentScale = if (item.kind == Kind.LIVE) ContentScale.Fit else ContentScale.Crop, onError = { failedUrl = img })
+        // The name is always on the card, like in the search results — never only after hovering.
+        if (img != null) {
+            val info = when (item.kind) {
+                Kind.SERIES -> seriesCountText(item)
+                Kind.MOVIE -> m?.year?.toString() ?: item.year?.toString() ?: ""
+                else -> ""
+            }
+            Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0.6f to Color.Transparent, 1f to Color(0xCC050507)))) {
+                Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(dpx(12)), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text(raw = true, text = item.title, color = Color.White, fontSize = spx(16), fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    if (info.isNotEmpty()) Text(raw = true, text = info, color = SoftInk, fontSize = spx(13), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+        }
         if (item.kind != Kind.SERIES && DeadLinks.isDead(item.url)) AppIcon(AIcon.Warning, DS.Gold, Modifier.align(Alignment.TopStart).padding(dpx(8)), dpx(18))
         // 17c: darkening as a simple surface on top (cheaper than transparency of the whole card)
         Box(Modifier.fillMaxSize().drawBehind { val d = 1f - dimA; if (d > 0.01f) drawRect(Color.Black.copy(alpha = d)) })
@@ -714,6 +731,8 @@ fun RowPosterCard(item: Item, baseW: Dp, modifier: Modifier, overlay: Int = 0, a
     // The expanded scene image draws its own frame
     // Image only. The focus sits on the poster slot (bottom), not on the wide card: otherwise Right/Left skips
     // the covered neighbor (bug "jumps 2 titles").
+    // A URL that failed to load once is not retried: it left a blank, nameless card forever.
+    var failedUrl by remember(item.id) { mutableStateOf<String?>(null) }
     val visual: @Composable (Modifier) -> Unit = { mod ->
     Box(
         mod.graphicsLayer { scaleX = s; scaleY = s }.focusGlow(f, shape).clip(shape)
@@ -721,14 +740,34 @@ fun RowPosterCard(item: Item, baseW: Dp, modifier: Modifier, overlay: Int = 0, a
             .border(1.dp, if (f) Color(0x40FFFFFF) else CardLine, shape)
     ) {
         // Poster at the bottom, the scene image fades in above it with the progress (no crossfade switch)
-        val img: String? = when {
+        val rawImg: String? = when {
             m?.poster != null -> cardPoster(m.poster)
             st.done -> item.logo
             else -> null
         }
-        // Placeholder lies under the image: if the image is missing or does not load, it stays visible
-        if (img == null && st.done) ArtPlaceholder(item, Modifier.fillMaxSize())
-        if (img != null) AsyncImage(img, item.title, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
+        val img = if (rawImg != null && rawImg == failedUrl) null else rawImg
+        // Placeholder from the first frame: while the TMDB search runs the card used to be
+        // a nameless gradient, and a broken image URL left it blank forever.
+        if (img == null) ArtPlaceholder(item, Modifier.fillMaxSize())
+        if (img != null) AsyncImage(img, item.title, Modifier.fillMaxSize(), contentScale = ContentScale.Crop, onError = { failedUrl = img })
+        // The name is always on the card, like in the search results — never only after
+        // hovering. Fades out as the focus preview opens (its PosterInfo takes over).
+        if (img != null && p < 1f) {
+            val tk = (baseW.value / 150f).coerceIn(0.85f, 1.6f)
+            val info = when (item.kind) {
+                Kind.SERIES -> seriesCountText(item)
+                Kind.MOVIE -> m?.year?.toString() ?: item.year?.toString() ?: ""
+                else -> ""
+            }
+            Box(Modifier.fillMaxSize().graphicsLayer { alpha = (1f - p).coerceIn(0f, 1f) }
+                .background(Brush.verticalGradient(0.6f to Color.Transparent, 1f to Color(0xCC050507)))) {
+                Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().padding(dpx(12)), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text(raw = true, text = item.title, color = Color.White, fontSize = (16f * tk).sp, lineHeight = (19f * tk).sp,
+                        fontWeight = FontWeight.ExtraBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    if (info.isNotEmpty()) Text(raw = true, text = info, color = Tok.TextMid, fontSize = (12f * tk).sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+            }
+        }
         if (wide && p > 0.01f && m?.backdrop != null) {
             Box(Modifier.fillMaxSize().graphicsLayer { alpha = p }) {
                 AsyncImage(cardBackdrop(m.backdrop), item.title, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)

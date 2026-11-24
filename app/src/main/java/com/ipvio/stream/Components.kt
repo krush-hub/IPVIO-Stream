@@ -182,8 +182,9 @@ fun PosterCard(
                 .border(DS.FocusBorder, border, shape),
             contentAlignment = Alignment.Center
         ) {
-            // Round 17: placeholder (gradient, initials, icon, title) below the image, stays visible if it is missing or does not load
-            if ((!live && (st.done || img != null)) || (live && img == null && st.done)) ArtPlaceholder(item, Modifier.fillMaxSize())
+            // Round 17: placeholder (gradient, initials, icon, title) below the image, stays visible if it is missing or does not load.
+            // Shown from the first frame: while the TMDB search runs the card used to be a nameless gradient.
+            if (img == null || st.done) ArtPlaceholder(item, Modifier.fillMaxSize())
             if (img != null) ArtImage(
                 img, item.title,
                 if (live) Modifier.fillMaxSize().padding(20.dp) else Modifier.fillMaxSize(),
