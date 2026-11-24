@@ -736,8 +736,8 @@ private fun DetailScreenFull(
             }
         }
         // Back button (top left, over the backdrop): the visible way back on phones once the
-        // system bars are hidden. On the TV it is just another focusable button.
-        if (!embedded) {
+        // system bars are hidden. Phones/tablets only — on the TV the remote's Back does this.
+        if (!embedded && !isTvDevice(ctx)) {
             HeroIconButton(AIcon.Left, Modifier.align(Alignment.TopStart).padding(start = dpx(16), top = dpx(16)), onClick = onBack)
         }
     }
