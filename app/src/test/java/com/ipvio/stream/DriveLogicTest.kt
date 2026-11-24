@@ -1,7 +1,9 @@
 package com.ipvio.stream
 
+
 import org.junit.Assert.*
 import org.junit.Test
+
 
 class DriveLogicTest {
     @Test fun fileNames() {
@@ -15,20 +17,23 @@ class DriveLogicTest {
         assertFalse(DriveLogic.isSyncFile("other.json"))
     }
 
+
     @Test fun badDeviceIdIsRefused() {
         var thrown = false
         try { DriveLogic.fileName("x' or name='y") } catch (e: IllegalArgumentException) { thrown = true }
         assertTrue(thrown)
     }
 
+
     @Test fun queries() {
         assertEquals("'1AbC_d-9' in parents and name contains 'ipvio_sync_' and trashed = false", DriveLogic.listQuery("1AbC_d-9"))
         assertEquals("'1AbC' in parents and name = 'ipvio_sync_ab12.json' and trashed = false", DriveLogic.fileQuery("1AbC", "ab12"))
-        assertTrue(DriveLogic.folderQuery().startsWith("name = 'IPVIO Stream Sync'"))
+        assertTrue(DriveLogic.folderQuery().startsWith("name = 'NexTV Sync'"))
         var thrown = false
         try { DriveLogic.listQuery("x' or '1'='1") } catch (e: IllegalArgumentException) { thrown = true }
         assertTrue(thrown)
     }
+
 
     @Test fun liveFiles() {
         assertEquals("ipvio_live_ab12cd34.json", DriveLogic.liveFileName("ab12cd34"))
@@ -45,12 +50,14 @@ class DriveLogicTest {
         assertTrue(thrown)
     }
 
+
     @Test fun driveTimes() {
         assertEquals(1794652530123L, DriveLogic.parseTime("2026-11-14T10:35:30.123Z"))
         assertEquals(1794652530000L, DriveLogic.parseTime("2026-11-14T10:35:30Z"))
         assertEquals(0L, DriveLogic.parseTime("yesterday"))
         assertEquals(0L, DriveLogic.parseTime(null))
     }
+
 
     @Test fun pollAnswers() {
         assertEquals(DriveLogic.Poll.WAIT, DriveLogic.pollAnswer("authorization_pending"))
@@ -60,3 +67,4 @@ class DriveLogicTest {
         assertEquals(DriveLogic.Poll.FAILED, DriveLogic.pollAnswer("invalid_client"))
     }
 }
+
