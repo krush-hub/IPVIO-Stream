@@ -216,6 +216,29 @@ fun HeroButton(text: String, icon: AIcon, primary: Boolean, modifier: Modifier =
     }
 }
 
+/**
+ * Round icon-only button in the same style as [HeroButton] (Netflix-style: a heart for favorites, a plus
+ * for My List, no text). [tint] overrides the icon color, e.g. red for an active favorite.
+ */
+@Composable
+fun HeroIconButton(icon: AIcon, modifier: Modifier = Modifier, h: Int = 44, tint: Color? = null, onClick: () -> Unit) {
+    var f by remember { mutableStateOf(false) }
+    val pulse = rememberPulse()
+    val s by animateFloatAsState(if (f) focusScale(1.06f) else 1f, label = "heroiconbtn")
+    val shape = RoundedCornerShape(50)
+    Box(
+        modifier.graphicsLayer { val k = s * pulse.scale; scaleX = k; scaleY = k }.size(dpx(h)).clip(shape)
+            .background(if (f) DS.FocusFill else Color(0x33FFFFFF))
+            .border(1.dp, if (f) DS.FocusFill else Color(0x40FFFFFF), shape)
+            .onFocusChanged { f = it.isFocused }
+            .trackFocus()
+            .clickable(onClick = { pulse.pulse(); onClick() }),
+        contentAlignment = Alignment.Center
+    ) {
+        AppIcon(icon, tint ?: if (f) DS.FocusInk else Color.White, size = dpx(h * 0.42f))
+    }
+}
+
 /** Uniform button of the detail page (seasons, director, read more …): same look and height as the main buttons. */
 @Composable
 fun DetailPill(text: String, modifier: Modifier = Modifier, light: Boolean = false, icon: AIcon? = null, trailing: AIcon? = null, h: Int = 44, onClick: () -> Unit) {
