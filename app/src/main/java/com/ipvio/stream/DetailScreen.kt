@@ -146,9 +146,6 @@ private fun DetailScreenFull(
         if (heroFocused) repeat(4) { delay(70); listState.scrollToItem(0) }
     }
     BackHandler(enabled = !embedded, onBack = onBack)
-    // Phones: hide the system bars on the detail page (they eat screen space while watching);
-    // the back button below is the visible way back once they are gone.
-    if (!embedded) ImmersiveEffect()
     var meta by remember(item.id) { mutableStateOf(MetaRepo.cached(item)) }
     var metaDone by remember(item.id) { mutableStateOf(!MetaRepo.usable(item) || item.kind == Kind.LIVE) }
     // The age rating is fetched for older stored details only on the real detail page, not in the list preview (1.4.5)
