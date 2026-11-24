@@ -117,7 +117,7 @@ keine¦brak
 Installiert¦Zainstalowano
 Oder vom Handy senden (gleiches WLAN):¦Albo wyślij z telefonu (ta sama sieć Wi-Fi):
 Bitte mit dem Internet verbinden¦Połącz się z internetem
-So schaltest du IPVIO Stream frei – ohne etwas am Fernseher zu tippen:¦Jak odblokować IPVIO Stream – bez wpisywania czegokolwiek na telewizorze:
+So schaltest du NexTV frei – ohne etwas am Fernseher zu tippen:¦Jak odblokować NexTV – bez wpisywania czegokolwiek na telewizorze:
 1.  Öffne auf deinem Handy diese Adresse:¦1.  Otwórz ten adres na telefonie:
 3.  Dieser Bildschirm schaltet sich danach automatisch frei.¦3.  Ten ekran odblokuje się potem automatycznie.
 Prüfe …¦Sprawdzanie …
@@ -182,7 +182,7 @@ Farbe 2 · Hervorhebung¦Kolor 2 · wyróżnienie
 Farbe 2 · automatisch¦Kolor 2 · automatycznie
 Farbe 2 ist auf diesem Hintergrund schwer lesbar.¦Kolor 2 jest słabo czytelny na tym tle.
 Farbe 1 färbt Knöpfe, Balken und markierte Flächen – die Schrift darauf wird automatisch hell oder dunkel, damit sie lesbar bleibt. Farbe 2 färbt Hervorhebungen, Rahmen und farbige Schrift. „Automatisch“ berechnet Farbe 2 passend zu Farbe 1.¦Kolor 1 służy do przycisków, pasków i zaznaczonych powierzchni – tekst na nim automatycznie staje się jasny lub ciemny, aby był czytelny. Kolor 2 służy do wyróżnień, obramowań i kolorowego tekstu. „Automatycznie” dobiera kolor 2 do koloru 1.
-IPVIO Navy¦IPVIO Navy
+NexTV Navy¦NexTV Navy
 Einfacher mit dem Handy¦Łatwiej z telefonem
 Mit der Fernbedienung zu tippen ist mühsam. Schick die Zugangsdaten lieber vom Handy:¦Wpisywanie pilotem jest uciążliwe. Wyślij dane z telefonu:
 Handy mit demselben WLAN verbinden wie dieses Gerät.¦Połącz telefon z tą samą siecią Wi-Fi co to urządzenie.

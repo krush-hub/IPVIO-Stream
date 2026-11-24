@@ -46,10 +46,10 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
     // Last entered playlist that has not finished loading (crash, power loss, abort): prefill
     val pend = remember { PlaylistStore.pending(ctx) }
     val pendX = remember { pend?.let { LoadLogic.xtreamParts(it.url) } }
-    var xtream by remember { mutableStateOf(pendX != null) }
+    var xtream by remember { mutableStateOf(pendX != null || NexTv.locked) }
     // Round 20: Stalker portal (portal address + MAC address)
     val pendS = remember { pend?.url?.let { StalkerLogic.parse(it) } }
-    var stalker by remember { mutableStateOf(pendS != null) }
+    var stalker by remember { mutableStateOf(pendS != null && !NexTv.locked) }
     var portal by remember { mutableStateOf(pendS?.portal ?: "") }
     var mac by remember { mutableStateOf(pendS?.mac ?: "00:1A:79:") }
     // Optional: some providers also want serial number and device IDs (as in TiviMate / STB Emu)
@@ -57,7 +57,7 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
     var devId by remember { mutableStateOf(pendS?.id1 ?: "") }
     var devId2 by remember { mutableStateOf(pendS?.id2 ?: "") }
     var url by remember { mutableStateOf(if (pend != null && pendX == null && pendS == null) pend.url else "") }
-    var host by remember { mutableStateOf(pendX?.first ?: "") }
+    var host by remember { mutableStateOf(pendX?.first ?: NexTv.SERVER) }
     var user by remember { mutableStateOf(pendX?.second ?: "") }
     var pass by remember { mutableStateOf(pendX?.third ?: "") }
     var showPass by remember { mutableStateOf(false) }
@@ -168,7 +168,7 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 BrandMark(Modifier.size(36.dp))
-                Text("IPVIO", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
+                Text("NexTV", color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
                 Text("Playlist hinzufügen", color = Color.White, fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 14.dp))
             }
             // Many new users ask which link to enter: say clearly that the app brings no content of its own
@@ -177,11 +177,12 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 Text("Wichtig zu wissen", color = Accent2, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                Text("IPVIO Stream ist nur ein Abspielgerät. Die App liefert selbst keine Sender, Filme, Serien und keine Playlist. Den Link oder die Zugangsdaten bekommst du von deinem IPTV-Anbieter oder aus deiner eigenen Quelle. Wir können dir keinen Link nennen.",
+                Text("NexTV ist nur ein Abspielgerät. Die App liefert selbst keine Sender, Filme, Serien und keine Playlist. Den Link oder die Zugangsdaten bekommst du von deinem IPTV-Anbieter oder aus deiner eigenen Quelle. Wir können dir keinen Link nennen.",
                     color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
             }
             // The padding sits inside the scrolling row: an enlarged (focused) button must not be cut off at its edge
-            Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp, vertical = 5.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            // NexTV lock: only the Xtream login on the NexTV server; no M3U or Stalker choice.
+            if (!NexTv.locked) Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp, vertical = 5.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 FocusButton("M3U-Link", Modifier.focusRequester(startFocus), primary = !xtream && !stalker, compact = true) { xtream = false; stalker = false }
                 FocusButton("Xtream-Login", primary = xtream && !stalker, compact = true) { xtream = true; stalker = false }
                 FocusButton("Stalker-Portal", primary = stalker, compact = true) { stalker = true; xtream = false }
@@ -211,7 +212,8 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
                     }
                 }
             } else {
-                Field(host, { host = it }, "Server (z. B. http://server.tld:8080)")
+                if (NexTv.locked) Text("Servidor NexTV: " + NexTv.SERVER, color = Muted, fontSize = 15.sp, raw = true)
+                else Field(host, { host = it }, "Server (z. B. http://server.tld:8080)")
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Field(user, { user = it }, "Benutzername", Modifier.weight(1f))
                     Field(pass, { pass = it }, "Passwort", Modifier.weight(1f), password = !showPass)
@@ -219,9 +221,11 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
                 Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
                     FocusButton(if (showPass) "Passwort verbergen" else "Passwort anzeigen", compact = true) { showPass = !showPass }
                 }
-                BackupFields(backups)
-                Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
-                    FocusButton("+ Backup-Server", compact = true) { backups.add("") }
+                if (!NexTv.locked) {
+                    BackupFields(backups)
+                    Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
+                        FocusButton("+ Backup-Server", compact = true) { backups.add("") }
+                    }
                 }
                 Text(BACKUP_HINT, color = Muted, fontSize = 15.sp)
             }
@@ -233,11 +237,12 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
             // Same start for "Hinzufügen" and "Sprachen wählen"; the second one asks for the languages first (#73, 19 Nov feedback)
             fun startLoad(chooseLanguages: Boolean) {
                 if (PlaylistStore.loading) return
-                val finalUrl = if (stalker) StalkerLogic.source(portal, mac, sn, devId, devId2, stbModel)?.encode() else if (xtream) PlaylistStore.xtreamUrl(host, user, pass) else url
+                val finalHost = if (NexTv.locked) NexTv.SERVER else host
+                val finalUrl = if (stalker) StalkerLogic.source(portal, mac, sn, devId, devId2, stbModel)?.encode() else if (xtream) PlaylistStore.xtreamUrl(finalHost, user, pass) else url
                 if (finalUrl == null) PlaylistStore.error = if (stalker) "Angaben unvollständig: Portal-Adresse und MAC-Adresse (z. B. 00:1A:79:12:34:56) nötig." else "Angaben unvollständig: Server, Benutzername und Passwort nötig."
                 else if (xtream && !stalker && !backupsValid(backups)) PlaylistStore.error = BACKUP_INVALID
                 else {
-                    if (xtream && !stalker) PlaylistStore.setBackups(ctx, finalUrl, backups.toList())
+                    if (xtream && !stalker) PlaylistStore.setBackups(ctx, finalUrl, if (NexTv.locked) emptyList() else backups.toList())
                     PlaylistStore.setNativeUa(ctx, finalUrl, !stalker && nativeUa)
                     if (chooseLanguages) PlaylistStore.requestLanguageChoice()
                     scope.launch { if (PlaylistStore.load(ctx, finalUrl, true)) onDone() }
@@ -246,7 +251,7 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
             // Playlist too big for the memory: offer the language selection right here, instead of a second "Hinzufügen"
             val tooBig = PlaylistStore.error == PlaylistStore.MSG_TOO_BIG || PlaylistStore.error == PlaylistLogic.TOO_BIG_HINT
             Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp, vertical = 5.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (!stalker) FocusButton(Lang.tr(if (nativeUa) "Kennung: IPVIO" else "Kennung: VLC"), compact = true) { nativeUa = !nativeUa }
+                if (!stalker) FocusButton(Lang.tr(if (nativeUa) "Kennung: NexTV" else "Kennung: VLC"), compact = true) { nativeUa = !nativeUa }
                 if (stalker) FocusButton("STB $stbModel", compact = true) { stbModel = StalkerModelLogic.next(stbModel) }
                 FocusButton(if (PlaylistStore.loading) "Lade…" else "Hinzufügen", primary = true, compact = true) { startLoad(false) }
                 if (tooBig && !PlaylistStore.loading) FocusButton("Sprachen wählen", primary = true, compact = true) { startLoad(true) }
@@ -256,7 +261,7 @@ fun AddPlaylistScreen(onDone: () -> Unit) {
                 else FocusButton("Weiter ohne Playlist", compact = true) { PlaylistStore.clearPending(ctx); PlaylistStore.error = null; DemoMode.enter(); onDone() }
             }
             // Second device? Take everything over in one step
-            Text("Schon ein anderes Gerät mit IPVIO Stream? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.", color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
+            Text("Schon ein anderes Gerät mit NexTV? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.", color = Muted, fontSize = 12.sp, lineHeight = 16.sp)
             Row(Modifier.padding(horizontal = 8.dp, vertical = 5.dp)) {
                 FocusButton("Sicherung von anderem Gerät einspielen", compact = true) {
                     try { pickBackup.launch(arrayOf("*/*")) }

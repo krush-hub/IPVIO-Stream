@@ -39,7 +39,7 @@ object UpdateVerify {
             // Could not be read on this device: Android checks the signature itself when installing, so the update goes on.
             // Before 1.4.3 this stopped the update with "Die Signatur konnte nicht geprüft werden." (Fire OS 7).
             UpdateLogic.SignerVerdict.UNKNOWN -> {
-                android.util.Log.w("IPVIO-UPD", "signer not readable (installed ${have.current.size}, apk ${got.current.size}, API ${Build.VERSION.SDK_INT}); left to the installer")
+                android.util.Log.w("NexTV-UPD", "signer not readable (installed ${have.current.size}, apk ${got.current.size}, API ${Build.VERSION.SDK_INT}); left to the installer")
                 null
             }
             UpdateLogic.SignerVerdict.MISMATCH -> "Die Signatur passt nicht zur installierten App. Android würde das Update ablehnen. " +

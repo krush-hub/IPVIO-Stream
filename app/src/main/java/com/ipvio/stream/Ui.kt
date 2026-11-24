@@ -67,14 +67,14 @@ val Surf: Color get() = Look.surf
 val Surf2: Color get() = Look.surf2
 val Accent1: Color get() = Look.accent1
 val Accent2: Color get() = Look.accent2
-/** Text color on Accent1 surfaces (dark for very light colors such as IPVIO green). */
+/** Text color on Accent1 surfaces (dark for very light colors such as NexTV green). */
 val OnAccent: Color get() = Look.onAccent
 /** Metadata gray (round 17 lighter: contrast ≥ 6:1 on all surfaces, readable even on glass over images). */
 val Muted = Color(0xFFA0A6B8)
 
 /**
  * Color tokens (round 17). Neutral text levels apply in every design; surfaces derive from the chosen design (Look).
- * Contrast on IPVIO Navy #0B0F19 (WCAG): TextHi 17:1, TextMid 12:1, TextLow/Muted 7.9:1; on the lightest surface always ≥ 5.9:1.
+ * Contrast on NexTV Navy #0B0F19 (WCAG): TextHi 17:1, TextMid 12:1, TextLow/Muted 7.9:1; on the lightest surface always ≥ 5.9:1.
  * Focus: buttons white with dark text, cards white frame with shadow.
  */
 object Tok {

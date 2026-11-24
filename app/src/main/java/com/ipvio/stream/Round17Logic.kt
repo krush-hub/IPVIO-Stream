@@ -31,10 +31,10 @@ object UpdateLogic {
         return false
     }
 
-    /** APK of a GitHub release: (name, download address); prefers "IPVIO-Stream.apk", otherwise the first APK. */
+    /** APK of a GitHub release: (name, download address); prefers "NexTV.apk", otherwise the first APK. */
     fun pickApk(assets: List<Pair<String, String>>): String? {
         val apks = assets.filter { it.first.endsWith(".apk", ignoreCase = true) && it.second.startsWith("https://") }
-        return (apks.firstOrNull { it.first.equals("IPVIO-Stream.apk", true) } ?: apks.firstOrNull { it.first.contains("ipvio", true) } ?: apks.firstOrNull())?.second
+        return (apks.firstOrNull { it.first.equals("NexTV.apk", true) } ?: apks.firstOrNull { it.first.contains("nextv", true) } ?: apks.firstOrNull())?.second
     }
 
     /** Check automatically once a day. */

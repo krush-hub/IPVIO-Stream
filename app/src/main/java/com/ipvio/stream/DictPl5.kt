@@ -8,7 +8,7 @@ Heute keine Spiele deiner Favoriten.¦Dziś brak meczów Twoich ulubionych.
 Noch keine Teams gemerkt. Im Team Center gibt es „Team merken“.¦Brak zapisanych drużyn. Użyj „Zapisz drużynę” w Centrum drużyny.
 Design und Farbe¦Wygląd i kolor
 Berechtigung erteilt. Der Autostart ist bereit.¦Uprawnienie przyznane. Autostart jest gotowy.
-Berechtigung fehlt noch. Bitte „Einstellung öffnen“ wählen und IPVIO Stream erlauben.¦Nadal brak uprawnienia. Wybierz „Otwórz ustawienie” i zezwól IPVIO Stream.
+Berechtigung fehlt noch. Bitte „Einstellung öffnen“ wählen und NexTV erlauben.¦Nadal brak uprawnienia. Wybierz „Otwórz ustawienie” i zezwól NexTV.
 Hauptliste¦lista główna
 zusätzlich angezeigt¦pokazywana też
 Nicht mehr zusätzlich anzeigen¦Przestań pokazywać dodatkowo
@@ -265,7 +265,7 @@ Es werden nicht alle Treffer angezeigt. Grenze die Suche genauer ein – „Alle
 Alle Einstellungen gehen auf die Standardwerte zurück. Playlists, Favoriten, Verlauf und Fortsetzen-Positionen bleiben erhalten. Das lässt sich nicht rückgängig machen.¦Wszystkie ustawienia wrócą do wartości domyślnych. Playlisty, ulubione, historia i pozycje wznawiania zostają zachowane. Tego nie można cofnąć.
 Alle Einstellungen wurden zurückgesetzt.¦Wszystkie ustawienia zostały zresetowane.
 Senderzeilen¦Wiersze kanałów
-Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „IPVIO Stream Sync“ an und sieht nur diesen Ordner, sonst nichts.¦Synchronizuje ulubione, historię i ustawienia między Twoimi urządzeniami. Aplikacja tworzy na Twoim Dysku Google folder „IPVIO Stream Sync” i widzi tylko ten folder, nic więcej.
+Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „NexTV Sync“ an und sieht nur diesen Ordner, sonst nichts.¦Synchronizuje ulubione, historię i ustawienia między Twoimi urządzeniami. Aplikacja tworzy na Twoim Dysku Google folder „NexTV Sync” i widzi tylko ten folder, nic więcej.
 Playlists und API-Schlüssel mitsichern¦Twórz też kopię playlist i kluczy API
 Verschlüsselt mit deinem Sync-Passwort. Ohne das Passwort kann niemand sie lesen, auch Google nicht.¦Szyfrowane Twoim hasłem synchronizacji. Bez hasła nikt nie może ich odczytać, nawet Google.
 Sync-Passwort (mindestens 8 Zeichen)¦Hasło synchronizacji (co najmniej 8 znaków)

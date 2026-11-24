@@ -6,11 +6,11 @@ C4 diagrams in Mermaid. Elements come from the refactoring audit of 2026-11-11 (
 
 ```mermaid
 C4Context
-  title IPVIO Stream - system context
+  title NexTV - system context
 
   Person(user, "User", "Watches live TV, movies and series; imports and searches from a phone browser")
   System_Ext(tv, "TV device", "Android TV, Google TV or Fire TV; runs the app, remote control input")
-  System(app, "IPVIO Stream", "IPTV player app (package com.ipvio.stream)")
+  System(app, "NexTV", "IPTV player app (package com.ipvio.stream)")
   System_Ext(provider, "Playlist provider", "Xtream, Stalker/Ministra portal or M3U source; chosen by the user")
   System_Ext(meta, "TMDB / OMDb", "Metadata; only with the user's own API keys")
   System_Ext(espn, "ESPN", "Data for the sports hub")
@@ -35,7 +35,7 @@ The app is one Gradle module (`:app`) with a flat package. The blocks below are 
 
 ```mermaid
 C4Container
-  title IPVIO Stream - modules inside :app
+  title NexTV - modules inside :app
 
   Person(user, "User", "Remote control on TV, browser on phone")
   System_Ext(provider, "Playlist provider", "Xtream, Stalker, M3U")
@@ -43,7 +43,7 @@ C4Container
   System_Ext(espn, "ESPN", "Sports data")
   System_Ext(github, "GitHub Releases", "Updates")
 
-  Container_Boundary(app, "IPVIO Stream (:app, com.ipvio.stream)") {
+  Container_Boundary(app, "NexTV (:app, com.ipvio.stream)") {
     Container(ui, "UI", "Kotlin, Jetpack Compose (no material3)", "MainActivity, HomeScreen, DetailScreen, SettingsHub, LiveTab, Boomer")
     Container(player, "Player", "Media3 ExoPlayer, FFmpeg decoder by reflection", "PlayerScreen, LiveTimeshift, Recorder, DualView, MultiView")
     Container(sources, "Playlist sources", "OkHttp", "XtreamApi, StalkerApi, PlaylistStore, M3U in Models, TlsFallback")

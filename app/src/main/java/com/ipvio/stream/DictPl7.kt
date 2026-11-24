@@ -10,7 +10,7 @@ Unverschlüsselte Verbindung?¦Połączenie nieszyfrowane?
 Das Zertifikat dieses Servers passt nicht zu seiner Adresse. Die Verbindung kann ohne Verschlüsselung fortgesetzt werden. Zugangsdaten und Inhalte können dann im Netzwerk mitgelesen werden.¦Certyfikat tego serwera nie pasuje do jego adresu. Połączenie może działać bez szyfrowania. Dane logowania i treści mogą wtedy być odczytane w sieci.
 Ohne Verschlüsselung verbinden¦Połącz bez szyfrowania
 Kennung: VLC¦Identyfikator: VLC
-Kennung: IPVIO¦Identyfikator: IPVIO
+Kennung: NexTV¦Identyfikator: NexTV
 Bildschirm beim Stöbern wach halten¦Utrzymuj ekran włączony podczas przeglądania
 An: Der Fernseher geht nicht in den Bildschirmschoner oder Ruhezustand, solange die App offen ist. Aus: nur während der Wiedergabe.¦Wł.: telewizor nie przejdzie do wygaszacza ekranu ani trybu uśpienia, dopóki aplikacja jest otwarta. Wył.: tylko podczas odtwarzania.
 Aktuelle PIN eingeben¦Wpisz obecny PIN

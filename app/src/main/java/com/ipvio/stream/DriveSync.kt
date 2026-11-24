@@ -21,7 +21,7 @@ import java.net.URLEncoder
  * Device sync over Google Drive (W-010, based on the Drive backup of 1.1). Optional.
  *
  * Sign-in like on other TV apps: the TV shows a code, the user confirms it on the phone (google.com/device);
- * this also works on Fire TV without Google services. Storage is the folder "IPVIO Stream Sync" in the user's Drive
+ * this also works on Fire TV without Google services. Storage is the folder "NexTV Sync" in the user's Drive
  * (scope drive.file: the app only sees the folder and files it created itself, nothing else; the hidden app folder
  * "drive.appdata" is refused by Google in the TV sign-in with "invalid_scope"). Every device writes only its own file
  * (see [DriveLogic.fileName]), so no device overwrites another one. Restoring is always a manual step in the UI.

@@ -1,12 +1,12 @@
 package com.ipvio.stream
 
 /**
- * Diagnostic output for loading playlists (logcat tag "IPVIO-PL"). Only numbers and category names:
+ * Diagnostic output for loading playlists (logcat tag "NexTV-PL"). Only numbers and category names:
  * no addresses, no user names, no passwords.
- * Read on the PC with: adb logcat -s IPVIO-PL
+ * Read on the PC with: adb logcat -s NexTV-PL
  */
 object PlaylistDiag {
-    const val TAG = "IPVIO-PL"
+    const val TAG = "NexTV-PL"
 
     /** Short summary of a list: entries per kind and the live categories (number, first and last in alphabetical order). */
     fun summary(items: List<Item>): String {

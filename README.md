@@ -1,12 +1,12 @@
-# IPVIO Stream
+# NexTV
 
 **A free, open-source IPTV player for Android TV, Google TV and Amazon Fire TV.** Built for the TV remote: live TV with TV guide and rewind, movies, series, sports and favourites, from your own playlists.
 
-![IPVIO Stream home screen](docs/screenshots/homescreen.jpg)
+![NexTV home screen](docs/screenshots/homescreen.jpg)
 
-> **IPVIO Stream is free and open source, and it stays free.** No ads, no subscription, no paid unlock. Donations are voluntary (see [Support the project](#support-the-project)).
+> **NexTV is free and open source, and it stays free.** No ads, no subscription, no paid unlock. Donations are voluntary (see [Support the project](#support-the-project)).
 
-> **IPVIO Stream does not provide any content.** It contains no channels, playlists, films or series. It is only a player for playlists that **you** add (Xtream Codes login, M3U address or file, or Stalker portal). Only use sources you are legally allowed to use.
+> **NexTV does not provide any content.** It contains no channels, playlists, films or series. It is only a player for playlists that **you** add (Xtream Codes login, M3U address or file, or Stalker portal). Only use sources you are legally allowed to use.
 
 **A note from the developer:** I try to keep everything free for myself too. Some features may therefore never come, if they would cost money to run (for example a paid server or a paid service). That is a deliberate decision.
 
@@ -20,7 +20,7 @@
 2. Allow **Install unknown apps** for Downloader when asked, then install.
 3. Start the app, choose **Add playlist** and enter your Xtream login, M3U address or Stalker portal.
 
-Or download the APK directly: [IPVIO-Stream.apk (latest release)](https://github.com/Emrodev/IPVIO-Stream/releases/latest/download/IPVIO-Stream.apk)
+Or download the APK directly: [NexTV-Stream.apk (latest release)](https://github.com/Emrodev/NexTV-Stream/releases/latest/download/NexTV-Stream.apk)
 
 **Requirements:** Android 7.0 (API 24) or newer. No account or registration needed.
 
@@ -43,13 +43,13 @@ Adding a playlist with the TV remote is slow? Scan the QR code under *Playlists 
 - **Live sync over your own Google Drive.** Favourites and history follow you between devices, with no button to press. Details below.
 - **Your phone as the remote.** Scan a QR code, then search titles, add playlists, control the player and manage categories from the phone. Details below.
 - **Backup, transfer and updates.** Back up and restore settings, move them to another device over Wi-Fi, and in-app updates from GitHub Releases.
-- **Look and feel.** IPVIO green on navy, colour themes, backgrounds, custom colours, three font choices, adjustable text and display size. Sidebar left, right or top. 10 languages.
+- **Look and feel.** NexTV green on navy, colour themes, backgrounds, custom colours, three font choices, adjustable text and display size. Sidebar left, right or top. 10 languages.
 
 ---
 
 ## Cool features
 
-These are the things that make IPVIO Stream different. Most of them are on by default or one setting away.
+These are the things that make NexTV different. Most of them are on by default or one setting away.
 
 ### Live sync between your TVs (Google Drive)
 
@@ -178,7 +178,7 @@ The app ships **without any API keys**. You can add your own free keys under **S
 1. Create an account at https://www.themoviedb.org/signup and confirm the e-mail address.
 2. **Log in.** The API page shows "restricted" as long as you are not logged in.
 3. Open https://www.themoviedb.org/settings/api (or: profile picture > Settings > API) and click **Request an API key**.
-4. Choose **Developer**, accept the terms and fill in the form (application name e.g. "IPVIO Stream", type "Personal use", a short description; the URL can be your GitHub page).
+4. Choose **Developer**, accept the terms and fill in the form (application name e.g. "NexTV", type "Personal use", a short description; the URL can be your GitHub page).
 5. Copy the **API Key** (the 32-character one, not the "API Read Access Token").
 
 ### Get a free OMDb key
@@ -216,7 +216,7 @@ The full list of known items is in [docs/SECURITY.md](docs/SECURITY.md).
 ## Community
 
 - **Reddit:** [r/ipvio](https://www.reddit.com/r/ipvio). Questions, news, tips and feedback from other users.
-- **GitHub:** [Emrodev/IPVIO-Stream](https://github.com/Emrodev/IPVIO-Stream). Source code, releases and issues.
+- **GitHub:** [Emrodev/NexTV-Stream](https://github.com/Emrodev/NexTV-Stream). Source code, releases and issues.
 
 ---
 
@@ -243,7 +243,7 @@ Requirements: Android Studio (current version) with the Android SDK. The Gradle 
 
 ```
 git clone <this repository>
-cd IPVIO-Stream
+cd NexTV-Stream
 ./gradlew assembleDebug        # Windows: gradlew.bat assembleDebug
 ```
 
@@ -273,15 +273,15 @@ Hello, I'm Claude. If you enjoy using this project and want to help this wannabe
 - Ko-fi: https://ko-fi.com/ipviodev
 - PayPal: https://www.paypal.com/ncp/payment/EUSU4WAGRJNXY
 
-IPVIO Stream stays free, ad-free and open source. Donations are voluntary and do not unlock any features.
+NexTV stays free, ad-free and open source. Donations are voluntary and do not unlock any features.
 
 ## License
 
-Copyright (C) 2026 IPVIO Stream contributors
+Copyright (C) 2026 NexTV contributors
 
-IPVIO Stream is free software: you can redistribute it and/or modify it under the terms of the **GNU General Public License version 3** (see [LICENSE](LICENSE)). The GPL is required because the app includes the GPL-3.0 licensed FFmpeg audio decoder. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the libraries, fonts and services used.
+NexTV is free software: you can redistribute it and/or modify it under the terms of the **GNU General Public License version 3** (see [LICENSE](LICENSE)). The GPL is required because the app includes the GPL-3.0 licensed FFmpeg audio decoder. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the libraries, fonts and services used.
 
-The name "IPVIO" and the IPVIO logo identify the original project. If you publish a modified version, please use your own name and logo so that users are not confused.
+The name "NexTV" and the NexTV logo identify the original project. If you publish a modified version, please use your own name and logo so that users are not confused.
 
 ## Disclaimer
 

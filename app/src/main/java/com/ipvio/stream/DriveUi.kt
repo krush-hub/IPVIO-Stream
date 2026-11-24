@@ -45,7 +45,7 @@ internal fun DriveSection(ctx: Context) {
     var busy by remember { mutableStateOf(false) }
 
     SectionTitle("Google Drive")
-    Hint("Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „IPVIO Stream Sync“ an und sieht nur diesen Ordner, sonst nichts.")
+    Hint("Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „NexTV Sync“ an und sieht nur diesen Ordner, sonst nichts.")
 
     if (!DriveSync.connected) {
         DriveConnect(ctx) { status = it }

@@ -4,7 +4,7 @@ package com.ipvio.stream
 // the other languages show English until they are added here.
 // Format: de ¦ en ¦ tr ¦ bs ¦ hr ¦ sr ¦ es ¦ fr ¦ it ¦ nl   (hr/sr empty = same as bs; others empty = same as en)
 val DictN = """
-Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „IPVIO Stream Sync“ an und sieht nur diesen Ordner, sonst nichts.¦Syncs favorites, history and settings between your devices. The app creates the folder "IPVIO Stream Sync" in your Google Drive and only sees this folder, nothing else.
+Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „NexTV Sync“ an und sieht nur diesen Ordner, sonst nichts.¦Syncs favorites, history and settings between your devices. The app creates the folder "NexTV Sync" in your Google Drive and only sees this folder, nothing else.
 Playlists und API-Schlüssel mitsichern¦Also back up playlists and API keys
 Verschlüsselt mit deinem Sync-Passwort. Ohne das Passwort kann niemand sie lesen, auch Google nicht.¦Encrypted with your sync password. Without the password nobody can read them, not even Google.
 Sync-Passwort (mindestens 8 Zeichen)¦Sync password (at least 8 characters)

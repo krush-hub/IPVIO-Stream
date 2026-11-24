@@ -11,7 +11,7 @@ Unverschlüsselte Verbindung?¦اتصال غير مشفّر؟
 Das Zertifikat dieses Servers passt nicht zu seiner Adresse. Die Verbindung kann ohne Verschlüsselung fortgesetzt werden. Zugangsdaten und Inhalte können dann im Netzwerk mitgelesen werden.¦شهادة هذا الخادم لا تطابق عنوانه. يمكن متابعة الاتصال بدون تشفير. عندها قد تُقرأ بيانات الدخول والمحتوى على الشبكة.
 Ohne Verschlüsselung verbinden¦الاتصال بدون تشفير
 Kennung: VLC¦المعرّف: VLC
-Kennung: IPVIO¦المعرّف: IPVIO
+Kennung: NexTV¦المعرّف: NexTV
 Bildschirm beim Stöbern wach halten¦إبقاء الشاشة مضاءة أثناء التصفح
 An: Der Fernseher geht nicht in den Bildschirmschoner oder Ruhezustand, solange die App offen ist. Aus: nur während der Wiedergabe.¦تشغيل: لن يدخل التلفاز في شاشة التوقف أو وضع السكون طالما التطبيق مفتوح. إيقاف: فقط أثناء التشغيل.
 Aktuelle PIN eingeben¦أدخل الرمز الحالي

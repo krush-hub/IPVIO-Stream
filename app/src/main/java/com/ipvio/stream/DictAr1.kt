@@ -289,7 +289,7 @@ Speicher¦التخزين
 Cache, Verlauf, Fortsetzen¦ذاكرة التخزين المؤقت والسجل والمتابعة
 Diagnose¦التشخيص
 Status und Fehlersuche¦الحالة واستكشاف الأخطاء
-Über IPVIO Stream¦حول IPVIO Stream
+Über NexTV¦حول NexTV
 Version, Quellen, Zurücksetzen¦الإصدار والمصادر وإعادة التعيين
 Wirklich? OK zum Bestätigen¦هل أنت متأكد؟ اضغط OK للتأكيد
 ‹ Zurück¦‹ رجوع
@@ -326,7 +326,7 @@ PIN entfernen¦إزالة رمز PIN
 Mit einer PIN lässt sich der Schutz nur nach Eingabe der PIN ändern. Die Erkennung arbeitet mit Stichwörtern in Kategorie- und Titelnamen und ist kein vollständiger Filter. Beim Zurücksetzen aller Einstellungen bleibt die PIN erhalten.¦عند تعيين رمز PIN، لا يمكن تغيير الحماية إلا بعد إدخاله. يعتمد الاكتشاف على كلمات مفتاحية في أسماء الفئات والعناوين، وهو ليس مرشحاً كاملاً. عند إعادة تعيين جميع الإعدادات، يبقى رمز PIN كما هو.
 Start¦البدء
 Beim Einschalten des Geräts öffnen¦فتح عند تشغيل الجهاز
-IPVIO Stream startet automatisch, sobald der Fernseher oder die Box hochgefahren ist.¦يبدأ IPVIO Stream تلقائياً بمجرد تشغيل التلفاز أو جهاز البث.
+NexTV startet automatisch, sobald der Fernseher oder die Box hochgefahren ist.¦يبدأ NexTV تلقائياً بمجرد تشغيل التلفاز أو جهاز البث.
 Berechtigung erteilt¦تم منح الإذن
 Berechtigung „Über anderen Apps einblenden“ fehlt¦إذن «العرض فوق التطبيقات الأخرى» غير ممنوح
 Einstellung öffnen¦فتح الإعداد
@@ -413,7 +413,7 @@ Letzter Fehler¦آخر خطأ
 Fehler seit Start¦أخطاء منذ البدء
 Playlist neu laden¦إعادة تحميل قائمة التشغيل
 Bericht kopieren¦نسخ التقرير
-IPVIO Diagnose¦تشخيص IPVIO
+NexTV Diagnose¦تشخيص NexTV
 Der Bericht enthält keine Adressen, Benutzernamen oder Passwörter. Er wird nur in die Zwischenablage kopiert und nirgendwohin gesendet.¦لا يحتوي التقرير على عناوين أو أسماء مستخدمين أو كلمات مرور. يُنسخ إلى الحافظة فقط ولا يُرسل إلى أي مكان.
 Tonspur¦المسار الصوتي
 Automatische Genres¦الأنواع التلقائية

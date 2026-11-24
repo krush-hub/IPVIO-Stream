@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
 object SubSearch {
     private val client = Net.base.newBuilder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS).build()
     private const val MAX_FILES = 200
-    private const val TAG = "IPVIO-Sub"
+    private const val TAG = "NexTV-Sub"
 
     /** A downloaded subtitle file attached to a title. */
     data class Sub(val file: File, val lang: String, val label: String) {

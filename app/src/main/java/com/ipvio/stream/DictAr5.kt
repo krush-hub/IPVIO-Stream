@@ -38,7 +38,7 @@ Favoriten und Listen¦المفضلة والقوائم
 Favoriten: {#0}¦المفضلة: {#0}
 Für die Playlists bitte oben das Sync-Passwort eingeben.¦لاستعادة قوائم التشغيل، أدخل كلمة مرور المزامنة أعلاه.
 Getrennt. Die Sicherungen in Google Drive bleiben erhalten.¦تم قطع الاتصال. تبقى النسخ الاحتياطية في Google Drive.
-Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „IPVIO Stream Sync“ an und sieht nur diesen Ordner, sonst nichts.¦يزامن المفضلة والسجل والإعدادات بين أجهزتك. ينشئ التطبيق في Google Drive مجلد «IPVIO Stream Sync» ولا يرى سوى هذا المجلد، لا شيء غيره.
+Gleicht Favoriten, Verlauf und Einstellungen zwischen deinen Geräten ab. Die App legt in deinem Google Drive den Ordner „NexTV Sync“ an und sieht nur diesen Ordner, sonst nichts.¦يزامن المفضلة والسجل والإعدادات بين أجهزتك. ينشئ التطبيق في Google Drive مجلد «NexTV Sync» ولا يرى سوى هذا المجلد، لا شيء غيره.
 Google Drive meldet einen Fehler ({#0}).¦يبلغ Google Drive عن خطأ ({#0}).
 Google Drive meldet einen Fehler ({#0}): {1}¦يبلغ Google Drive عن خطأ ({#0}): {1}
 Google Drive meldet einen Fehler.¦يبلغ Google Drive عن خطأ.

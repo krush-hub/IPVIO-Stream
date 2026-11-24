@@ -1,6 +1,6 @@
 # Releasing a new version
 
-IPVIO Stream checks the latest GitHub release once a day and offers the update in the bell at the top right.
+NexTV checks the latest GitHub release once a day and offers the update in the bell at the top right.
 It reads `update.json`, a small file you attach to every release (section 3). Without that file it falls back to the GitHub API.
 Android installs an update **over** the old app (and keeps playlists, favorites, history and settings) only if
 both APKs are signed with **the same key**. Lose the key and every user has to uninstall and start from scratch.
@@ -45,27 +45,27 @@ Since 15 Nov 2026, `.github/workflows/release.yml` does steps 1 to 6 after a mer
 1. In `app/build.gradle.kts` raise `versionCode` (by 1) and `versionName` (e.g. `"1.2"`).
 2. Build the signed APK: `gradlew assembleRelease` (or Build > Generate Signed App Bundle / APK).
    The file is `app/build/outputs/apk/release/app-release.apk`.
-3. Rename it to **`IPVIO-Stream.apk`**.
+3. Rename it to **`NexTV-Stream.apk`**.
 4. Create `update.json` for exactly this APK (section 3).
 5. On GitHub: **Releases > Draft a new release**
    - Tag: `v` + versionName, e.g. `v1.2` (the app compares this tag with its own version)
-   - Title: `IPVIO Stream ` + versionName, e.g. `IPVIO Stream 1.2`
+   - Title: `NexTV ` + versionName, e.g. `NexTV 1.2`
    - Notes: paste `docs/release-notes/v<versionName>.md` (written from `CHANGELOG.md` with `docs/release-notes/TEMPLATE.md`).
      If the app falls back to the GitHub API, it shows the first four non-heading lines of this text, so the highlights come first
-   - Attach **both** `IPVIO-Stream.apk` and `update.json`
+   - Attach **both** `NexTV-Stream.apk` and `update.json`
    - **Publish release** (not "pre-release", the app ignores those)
-6. Check: open `https://github.com/Emrodev/IPVIO-Stream/releases/latest/download/update.json` in a browser. It must show your JSON.
+6. Check: open `https://github.com/Emrodev/NexTV-Stream/releases/latest/download/update.json` in a browser. It must show your JSON.
 
 The download link in the README and the Downloader code always point to the newest release:
-`https://github.com/Emrodev/IPVIO-Stream/releases/latest/download/IPVIO-Stream.apk`
+`https://github.com/Emrodev/NexTV-Stream/releases/latest/download/NexTV-Stream.apk`
 
 ## 3. update.json (Windows)
 
-The app downloads `https://github.com/Emrodev/IPVIO-Stream/releases/latest/download/update.json` first. It contains the
+The app downloads `https://github.com/Emrodev/NexTV-Stream/releases/latest/download/update.json` first. It contains the
 SHA-256 of the APK, so the app can reject a damaged download before the installer opens.
 
-1. Put the final `IPVIO-Stream.apk` in a folder, open **Command Prompt** there (type `cmd` in the folder's address bar).
-2. Run `certutil -hashfile IPVIO-Stream.apk SHA256`.
+1. Put the final `NexTV-Stream.apk` in a folder, open **Command Prompt** there (type `cmd` in the folder's address bar).
+2. Run `certutil -hashfile NexTV-Stream.apk SHA256`.
    The second line is the hash: 64 characters `0-9 a-f`. Older Windows versions print it with spaces; the app ignores spaces and upper/lower case.
 3. Create `update.json` with Notepad (save as **UTF-8**, file type "All files", name exactly `update.json`):
 
@@ -73,7 +73,7 @@ SHA-256 of the APK, so the app can reject a damaged download before the installe
 {
   "versionCode": 5,
   "versionName": "1.4",
-  "apk": "IPVIO-Stream.apk",
+  "apk": "NexTV-Stream.apk",
   "sha256": "PASTE-THE-64-CHARACTER-HASH-HERE",
   "minSupportedCode": 0,
   "mandatory": false,
@@ -103,7 +103,7 @@ Rules:
 
 - Within a day the bell shows a red dot and "Update available: version 1.2". One click downloads and opens the installer.
 - Settings > About > App update: check now, install, or turn off the automatic check.
-- The first time, Android asks to allow "Install unknown apps" for IPVIO Stream.
+- The first time, Android asks to allow "Install unknown apps" for NexTV.
 
 Version 1.0 has no update check yet, so 1.0 users install 1.1 once by hand (Downloader code or link). From 1.1 on it works from inside the app.
 

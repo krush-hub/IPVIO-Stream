@@ -288,7 +288,7 @@ Speicher¦Pamięć
 Cache, Verlauf, Fortsetzen¦Pamięć podręczna, historia, wznawianie
 Diagnose¦Diagnostyka
 Status und Fehlersuche¦Stan i rozwiązywanie problemów
-Über IPVIO Stream¦O IPVIO Stream
+Über NexTV¦O NexTV
 Version, Quellen, Zurücksetzen¦Wersja, źródła, reset
 Wirklich? OK zum Bestätigen¦Na pewno? OK, aby potwierdzić
 ‹ Zurück¦‹ Wstecz
@@ -325,7 +325,7 @@ PIN entfernen¦Usuń PIN
 Mit einer PIN lässt sich der Schutz nur nach Eingabe der PIN ändern. Die Erkennung arbeitet mit Stichwörtern in Kategorie- und Titelnamen und ist kein vollständiger Filter. Beim Zurücksetzen aller Einstellungen bleibt die PIN erhalten.¦Z kodem PIN ochronę można zmienić dopiero po jego wpisaniu. Wykrywanie opiera się na słowach kluczowych w nazwach kategorii i tytułów i nie jest pełnym filtrem. PIN zostaje zachowany przy resecie wszystkich ustawień.
 Start¦Start
 Beim Einschalten des Geräts öffnen¦Otwieraj przy starcie urządzenia
-IPVIO Stream startet automatisch, sobald der Fernseher oder die Box hochgefahren ist.¦IPVIO Stream uruchamia się automatycznie, gdy tylko telewizor lub przystawka się włączy.
+NexTV startet automatisch, sobald der Fernseher oder die Box hochgefahren ist.¦NexTV uruchamia się automatycznie, gdy tylko telewizor lub przystawka się włączy.
 Berechtigung erteilt¦Uprawnienie przyznane
 Berechtigung „Über anderen Apps einblenden“ fehlt¦Brak uprawnienia „Wyświetlanie nad innymi aplikacjami”
 Einstellung öffnen¦Otwórz ustawienie
@@ -412,7 +412,7 @@ Letzter Fehler¦Ostatni błąd
 Fehler seit Start¦Błędy od startu
 Playlist neu laden¦Wczytaj playlistę ponownie
 Bericht kopieren¦Kopiuj raport
-IPVIO Diagnose¦Diagnostyka IPVIO
+NexTV Diagnose¦Diagnostyka NexTV
 Der Bericht enthält keine Adressen, Benutzernamen oder Passwörter. Er wird nur in die Zwischenablage kopiert und nirgendwohin gesendet.¦Raport nie zawiera adresów, nazw użytkowników ani haseł. Jest tylko kopiowany do schowka i nigdzie nie jest wysyłany.
 Tonspur¦Ścieżka audio
 Automatische Genres¦Automatyczne gatunki
@@ -450,8 +450,8 @@ noch nie¦nigdy
 Nächste Aktualisierung:¦Następna aktualizacja:
 „Bei jedem Start“ lädt die Playlist bei jedem Öffnen der App. Die geplanten Varianten laufen auch im Hintergrund, solange das Gerät eingeschaltet und online ist, und holen verpasste Termine beim nächsten Start nach. „Nur von Hand“ nutzt immer den gespeicherten Stand; Neu laden geht jederzeit mit dem Knopf oben. Die Uhrzeit richtet sich nach deiner Zeitzone unter „Sprache & Region“.¦„Przy każdym starcie” wczytuje playlistę przy każdym otwarciu aplikacji. Opcje harmonogramu działają też w tle, gdy urządzenie jest włączone i w sieci, a pominięte terminy nadrabiają przy następnym starcie. „Tylko ręcznie” zawsze używa zapisanej kopii; możesz ją w każdej chwili wczytać ponownie przyciskiem powyżej. Godzina jest zgodna ze strefą czasową z „Język i region”.
 Zugangsdaten werden nur auf diesem Gerät gespeichert und hier nicht angezeigt. Es ist immer eine Playlist aktiv. Mit „Aktivieren“ wechselst du die Liste.¦Dane logowania są przechowywane tylko na tym urządzeniu i nie są tu pokazywane. Jedna playlista jest zawsze aktywna. Użyj „Aktywuj”, aby przełączyć listę.
-IPVIO Stream · Version¦IPVIO Stream · wersja
-IPVIO Stream ist ein Player und liefert selbst keine Inhalte. Nutze nur Quellen, für die du eine Berechtigung hast.¦IPVIO Stream to odtwarzacz i sam nie dostarcza żadnych treści. Korzystaj tylko ze źródeł, do których masz prawo.
+NexTV · Version¦NexTV · wersja
+NexTV ist ein Player und liefert selbst keine Inhalte. Nutze nur Quellen, für die du eine Berechtigung hast.¦NexTV to odtwarzacz i sam nie dostarcza żadnych treści. Korzystaj tylko ze źródeł, do których masz prawo.
 Dieses Produkt verwendet die TMDB-API, wird aber nicht von TMDB unterstützt oder zertifiziert. Intro-Zeiten: TheIntroDB.¦Ten produkt korzysta z API TMDB, ale nie jest wspierany ani certyfikowany przez TMDB. Czasy czołówek: TheIntroDB.
 Systemeinstellungen der App¦Ustawienia systemowe aplikacji
 """

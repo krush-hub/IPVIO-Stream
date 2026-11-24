@@ -32,14 +32,14 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.ipvio.stream"
+        applicationId = "com.nextv.stream"
         minSdk = 24
         targetSdk = 37
         // Raise both for every release; the GitHub release tag must match versionName (e.g. tag "v1.1").
-        versionCode = 14
-        versionName = "1.4.8"
+        versionCode = 1
+        versionName = "1.0.0"
         // Name under the icon; the debug build overrides it (see buildTypes)
-        manifestPlaceholders["appLabel"] = "IPVIO Stream"
+        manifestPlaceholders["appLabel"] = "NexTV"
 
         buildConfigField("String", "TMDB_KEY", "\"${secret("TMDB_KEY")}\"")
         buildConfigField("String", "OMDB_KEY", "\"${secret("OMDB_KEY")}\"")
@@ -61,7 +61,7 @@ android {
         // is not overwritten. Both apps can be installed side by side (own data, own name).
         debug {
             applicationIdSuffix = ".test"
-            manifestPlaceholders["appLabel"] = "IPVIO Stream"
+            manifestPlaceholders["appLabel"] = "NexTV"
         }
         release {
             if (hasKeystore) signingConfig = signingConfigs.getByName("release")

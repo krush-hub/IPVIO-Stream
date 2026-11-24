@@ -64,7 +64,7 @@ Boomer Mode jetzt starten¦بدء وضع Boomer الآن
 Die App wechselt sofort zur einfachen Oberfläche. Stelle vorher alles ein. Zurück zur normalen App: Zurück-Taste 10 Sekunden halten, dann PIN.¦سيتحول التطبيق فورًا إلى الواجهة البسيطة. اضبط كل شيء مسبقًا. للعودة إلى التطبيق العادي: اضغط زر الرجوع لمدة 10 ثوانٍ ثم أدخل رمز PIN.
 Automatischer Start nach dem Einschalten: bereit¦التشغيل التلقائي بعد التشغيل: جاهز
 Automatischer Start: Berechtigung „Über anderen Apps einblenden“ fehlt¦التشغيل التلقائي: إذن «العرض فوق التطبيقات الأخرى» مفقود
-Im Boomer Mode öffnet sich IPVIO Stream von selbst, sobald der Fernseher oder die Box eingeschaltet wird. Manche Geräte (z. B. einzelne Fire-TV-Modelle) blockieren das trotzdem.¦في وضع Boomer، يفتح IPVIO Stream تلقائيًا عند تشغيل التلفاز أو جهاز البث. بعض الأجهزة (مثل بعض طُرز Fire TV) قد تحظر ذلك رغم ذلك.
+Im Boomer Mode öffnet sich NexTV von selbst, sobald der Fernseher oder die Box eingeschaltet wird. Manche Geräte (z. B. einzelne Fire-TV-Modelle) blockieren das trotzdem.¦في وضع Boomer، يفتح NexTV تلقائيًا عند تشغيل التلفاز أو جهاز البث. بعض الأجهزة (مثل بعض طُرز Fire TV) قد تحظر ذلك رغم ذلك.
 Was der Bildschirm zeigt¦ما تعرضه الشاشة
 Schalte Reihen ein oder aus und schiebe sie mit „Hoch“ und „Runter“. Reihen ohne Inhalt bleiben automatisch versteckt.¦فعّل الصفوف أو عطّلها، ورتّبها باستخدام «أعلى» و«أسفل». الصفوف الفارغة تُخفى تلقائيًا.
 Sender auswählen¦اختيار القنوات
@@ -194,7 +194,7 @@ Heute keine Spiele deiner Favoriten.¦لا توجد مباريات لمفضلا�
 Noch keine Teams gemerkt. Im Team Center gibt es „Team merken“.¦لم تحفظ أي فرق بعد. يمكنك حفظ الفرق من مركز الفرق عبر «حفظ الفريق».
 Design und Farbe¦التصميم واللون
 Berechtigung erteilt. Der Autostart ist bereit.¦تم منح الإذن. التشغيل التلقائي جاهز.
-Berechtigung fehlt noch. Bitte „Einstellung öffnen“ wählen und IPVIO Stream erlauben.¦الإذن مفقود بعد. يُرجى اختيار «فتح الإعدادات» والسماح لـ IPVIO Stream.
+Berechtigung fehlt noch. Bitte „Einstellung öffnen“ wählen und NexTV erlauben.¦الإذن مفقود بعد. يُرجى اختيار «فتح الإعدادات» والسماح لـ NexTV.
 Hauptliste¦القائمة الرئيسية
 zusätzlich angezeigt¦معروضة إضافيًا
 Nicht mehr zusätzlich anzeigen¦إيقاف العرض الإضافي

@@ -1461,6 +1461,8 @@ object PlaylistStore {
     }
 
     private suspend fun loadExtra(c: Context, u: String, network: Boolean): Extra? {
+        // NexTV lock: extra playlists must also come from the NexTV server.
+        if (!NexTv.hostAllowed(u)) { extraError = "Dieser NexTV-Player funktioniert nur mit dem NexTV-Server."; return null }
         val hidden = PlaylistMode.withMode(c, u, LangFilter.hidden)
         if (!network) {
             val head = readHeader(c, u)
@@ -1591,6 +1593,8 @@ object PlaylistStore {
     private suspend fun loadInner(c: Context, url: String, save: Boolean, skipNetworkWhenCached: Boolean, ask: Boolean, resumed: Boolean, startup: Boolean = false): Boolean {
         ensure(c)
         val u = PlaylistLogic.normalizeUrl(url) ?: run { error = "Bitte eine gültige Adresse eingeben (beginnt mit http:// oder https://)."; return false }
+        // NexTV lock: only the NexTV server is accepted (see NexTv.kt).
+        if (!NexTv.hostAllowed(u)) { error = "Dieser NexTV-Player funktioniert nur mit dem NexTV-Server."; return false }
         // Restore the saved sublist for this playlist so the filter is applied while loading.
         val h = key(u)
         val savedName = SublistStore.active(c, h)

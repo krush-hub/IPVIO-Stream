@@ -70,4 +70,5 @@ Playlists: pro Playlist ein Fenster „Bearbeiten“ mit „Übernehmen“, und 
 Playlists: „Neu laden“ bei einer Nebenliste lädt im Hintergrund und macht sie nicht mehr zur Hauptliste¦Playlists: "Reload" on a playlist that is not the main list loads in the background and no longer makes it the main list
 Schnellerer Start der App¦Faster app start
 Das VPN und die neuen Sport-Wettbewerbe sind noch nicht auf allen Geräten getestet¦The VPN and the new sports competitions have not been tested on all devices yet
+Dieser NexTV-Player funktioniert nur mit dem NexTV-Server.¦This NexTV player only works with the NexTV server.¦¦¦¦¦¦¦¦
 """

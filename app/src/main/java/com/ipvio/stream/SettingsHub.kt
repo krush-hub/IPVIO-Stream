@@ -70,11 +70,11 @@ private val CATS = listOf(
     Cat(AIcon.Live, "Boomer Mode", "Ganz einfach: große Kacheln zum Auswählen"),
     Cat(AIcon.Sliders, "Startseite anpassen", "Reihen und Widgets wählen und ordnen"),
     Cat(AIcon.Live, "Sports Hub", "Sportarten, Wettbewerbe, Hinweise, Bereiche"),
-    Cat(AIcon.Info, "Über IPVIO Stream", "Version, Quellen, Updates"),
+    Cat(AIcon.Info, "Über NexTV", "Version, Quellen, Updates"),
     // Resets every settings tab at once (each tab 0..8 has its own reset for just that tab)
     Cat(AIcon.Warning, "Alles zurücksetzen", "Alle Einstellungen auf Standard"),
     // Donate is always the very last entry
-    Cat(AIcon.HeartFilled, "Spende", "Unterstütze IPVIO Stream")
+    Cat(AIcon.HeartFilled, "Spende", "Unterstütze NexTV")
 )
 
 /** Open a settings page directly (e.g. profile circle at the top with only one profile: page "Profiles"). */
@@ -485,7 +485,7 @@ private fun GeneralPage(ctx: Context) {
     SectionTitle("Start")
     ToggleRow(
         "Beim Einschalten des Geräts öffnen",
-        "IPVIO Stream startet automatisch, sobald der Fernseher oder die Box hochgefahren ist.",
+        "NexTV startet automatisch, sobald der Fernseher oder die Box hochgefahren ist.",
         General.autoStart
     ) { on ->
         General.setAutoStart(ctx, on)
@@ -552,7 +552,7 @@ internal fun openOverlaySettings(ctx: Context) {
 /** Shows the result of the permission check so the "Prüfen" button gives visible feedback. */
 internal fun reportOverlayState(ctx: Context) {
     val msg = if (canStartFromBoot(ctx)) "Berechtigung erteilt. Der Autostart ist bereit."
-    else "Berechtigung fehlt noch. Bitte „Einstellung öffnen“ wählen und IPVIO Stream erlauben."
+    else "Berechtigung fehlt noch. Bitte „Einstellung öffnen“ wählen und NexTV erlauben."
     android.widget.Toast.makeText(ctx, Lang.tr(msg), android.widget.Toast.LENGTH_LONG).show()
 }
 
@@ -958,7 +958,7 @@ private fun DiagPage(ctx: Context, reload: () -> Unit) {
             val text = lines.filter { it.first != "Log" || it.second.isNotEmpty() }.joinToString("\n") { it.first + ": " + it.second }
             runCatching {
                 val cm = ctx.getSystemService(android.content.ClipboardManager::class.java)
-                cm?.setPrimaryClip(android.content.ClipData.newPlainText("IPVIO Diagnose", text))
+                cm?.setPrimaryClip(android.content.ClipData.newPlainText("NexTV Diagnose", text))
             }
         }
     }
@@ -1561,10 +1561,10 @@ private fun ApiKeysPhoneEntry(ctx: Context, onKeys: (Map<String, String>) -> Uni
 
 @Composable
 private fun AboutPage(ctx: Context) {
-    Text("IPVIO Stream · Version " + appVersion(ctx), color = Color.White, fontSize = 18.sp)
-    Hint("IPVIO Stream ist ein Player und liefert selbst keine Inhalte. Nutze nur Quellen, für die du eine Berechtigung hast.")
+    Text("NexTV · Version " + appVersion(ctx), color = Color.White, fontSize = 18.sp)
+    Hint("NexTV ist ein Player und liefert selbst keine Inhalte. Nutze nur Quellen, für die du eine Berechtigung hast.")
     Hint("Dieses Produkt verwendet die TMDB-API, wird aber nicht von TMDB unterstützt oder zertifiziert. Wertungen: OMDb. Intro-Zeiten: TheIntroDB.")
-    Hint("IPVIO Stream ist freie Software unter der GNU General Public License v3 (GPL-3.0). Verwendete Bibliotheken: AndroidX/Jetpack Compose, Media3 (Apache 2.0), OkHttp, Coil (Apache 2.0), Jellyfin FFmpeg-Decoder (GPL-3.0), Schriften Outfit und Inter (SIL Open Font License).")
+    Hint("NexTV ist freie Software unter der GNU General Public License v3 (GPL-3.0). Verwendete Bibliotheken: AndroidX/Jetpack Compose, Media3 (Apache 2.0), OkHttp, Coil (Apache 2.0), Jellyfin FFmpeg-Decoder (GPL-3.0), Schriften Outfit und Inter (SIL Open Font License).")
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         PillButton("Systemeinstellungen der App") {
             runCatching {

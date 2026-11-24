@@ -6,7 +6,7 @@ All Kotlin files are in `app/src/main/java/com/ipvio/stream/`, so file names bel
 
 ## 1. Introduction and goals
 
-- IPVIO Stream is a free, open-source IPTV player (GPL-3.0) for Android TV, Google TV and Fire TV.
+- NexTV is a free, open-source IPTV player (GPL-3.0) for Android TV, Google TV and Fire TV.
 - It plays content from the user's own playlist providers (Xtream, Stalker/Ministra, M3U). It does not supply content.
 - TODO: quality goals in priority order (not stated in the audit).
 
@@ -109,7 +109,7 @@ TODO: not covered by the audit. Candidates: app start, playback start, playlist 
 ## 7. Deployment view
 
 - Distribution: APK in GitHub Releases. In-app update checks GitHub Releases once a day (`AppUpdate.kt:20-34`). Signing: see [RELEASE.md](RELEASE.md).
-- CI: `build.yml` runs unit tests and a debug build on push to `main` and `dev` and on pull requests. `release.yml` runs on push to `main`: tests, lint report (not blocking yet), signed release APK, then the GitHub release `v<versionName>` with `IPVIO-Stream.apk` and `update.json`. `pr-checks.yml` warns when app code changes without test changes. `build.yml` uses `@v4` tags; `release.yml` pins commit SHAs.
+- CI: `build.yml` runs unit tests and a debug build on push to `main` and `dev` and on pull requests. `release.yml` runs on push to `main`: tests, lint report (not blocking yet), signed release APK, then the GitHub release `v<versionName>` with `NexTV-Stream.apk` and `update.json`. `pr-checks.yml` warns when app code changes without test changes. `build.yml` uses `@v4` tags; `release.yml` pins commit SHAs.
 - Branches and release rules: [CLAUDE.md](../CLAUDE.md) section 16 and [ADR 0006](adr/0006-branch-model-and-release-pipeline.md).
 - Network ports: the phone server uses ports 8765-8775 (`PhoneImport.kt:195`).
 

@@ -12,8 +12,8 @@ noch nie¦أبدًا
 Nächste Aktualisierung:¦التحديث التالي:
 „Bei jedem Start“ lädt die Playlist bei jedem Öffnen der App. Die geplanten Varianten laufen auch im Hintergrund, solange das Gerät eingeschaltet und online ist, und holen verpasste Termine beim nächsten Start nach. „Nur von Hand“ nutzt immer den gespeicherten Stand; Neu laden geht jederzeit mit dem Knopf oben. Die Uhrzeit richtet sich nach deiner Zeitzone unter „Sprache & Region“.¦«عند كل تشغيل» تحمّل قائمة التشغيل عند كل فتح للتطبيق. تعمل الخيارات المجدولة في الخلفية أيضًا ما دام الجهاز مشغّلًا ومتصلًا بالإنترنت، وتستدرك المواعيد الفائتة عند التشغيل التالي. «يدويًا فقط» يستخدم دائمًا النسخة المحفوظة؛ ويمكنك إعادة التحميل في أي وقت بالزر أعلاه. يعتمد الوقت على منطقتك الزمنية في «اللغة والمنطقة».
 Zugangsdaten werden nur auf diesem Gerät gespeichert und hier nicht angezeigt. Es ist immer eine Playlist aktiv. Mit „Aktivieren“ wechselst du die Liste.¦تُحفظ بيانات الدخول على هذا الجهاز فقط ولا تُعرض هنا. تظل هناك دائمًا قائمة تشغيل نشطة. استخدم «تفعيل» للتبديل بين القوائم.
-IPVIO Stream · Version¦IPVIO Stream · الإصدار
-IPVIO Stream ist ein Player und liefert selbst keine Inhalte. Nutze nur Quellen, für die du eine Berechtigung hast.¦IPVIO Stream مشغّل ولا يقدّم أي محتوى بنفسه. استخدم فقط المصادر المصرّح لك باستخدامها.
+NexTV · Version¦NexTV · الإصدار
+NexTV ist ein Player und liefert selbst keine Inhalte. Nutze nur Quellen, für die du eine Berechtigung hast.¦NexTV مشغّل ولا يقدّم أي محتوى بنفسه. استخدم فقط المصادر المصرّح لك باستخدامها.
 Dieses Produkt verwendet die TMDB-API, wird aber nicht von TMDB unterstützt oder zertifiziert. Intro-Zeiten: TheIntroDB.¦يستخدم هذا المنتج واجهة TMDB البرمجية، لكنه غير مدعوم أو معتمد من TMDB. أوقات المقدمات: TheIntroDB.
 Systemeinstellungen der App¦إعدادات نظام التطبيق
 Setzt Ansicht, Design, Menü, Player, Ton und Start auf die Standardwerte. Playlists, Favoriten, Verlauf und Fortsetzen-Positionen bleiben erhalten. Zwischenspeicher leerst du unter „Speicher“.¦يعيد العرض والتصميم والقائمة والمشغّل والصوت والبدء إلى القيم الافتراضية. تبقى قوائم التشغيل والمفضلة والسجل ومواضع الاستئناف محفوظة. يمكنك مسح ذاكرة التخزين المؤقت من «التخزين».
@@ -131,7 +131,7 @@ keine¦لا يوجد
 Installiert¦مثبّت
 Oder vom Handy senden (gleiches WLAN):¦أو أرسل من هاتفك (نفس شبكة Wi-Fi):
 Bitte mit dem Internet verbinden¦يُرجى الاتصال بالإنترنت
-So schaltest du IPVIO Stream frei – ohne etwas am Fernseher zu tippen:¦هكذا تفعّل IPVIO Stream — دون كتابة أي شيء على التلفاز:
+So schaltest du NexTV frei – ohne etwas am Fernseher zu tippen:¦هكذا تفعّل NexTV — دون كتابة أي شيء على التلفاز:
 1.  Öffne auf deinem Handy diese Adresse:¦1.  افتح هذا العنوان على هاتفك:
 3.  Dieser Bildschirm schaltet sich danach automatisch frei.¦3.  ستُفعَّل هذه الشاشة تلقائيًا بعد ذلك.
 Prüfe …¦جارٍ التحقق…
@@ -196,7 +196,7 @@ Farbe 2 · Hervorhebung¦اللون 2 · التمييز
 Farbe 2 · automatisch¦اللون 2 · تلقائي
 Farbe 2 ist auf diesem Hintergrund schwer lesbar.¦اللون 2 صعب القراءة على هذه الخلفية.
 Farbe 1 färbt Knöpfe, Balken und markierte Flächen – die Schrift darauf wird automatisch hell oder dunkel, damit sie lesbar bleibt. Farbe 2 färbt Hervorhebungen, Rahmen und farbige Schrift. „Automatisch“ berechnet Farbe 2 passend zu Farbe 1.¦اللون 1 يلوّن الأزرار والأشرطة والمساحات المحددة — ويصبح النص عليها فاتحًا أو داكنًا تلقائيًا ليبقى مقروءًا. اللون 2 يلوّن التمييزات والإطارات والنص الملوّن. «تلقائي» يحسب اللون 2 بما يناسب اللون 1.
-IPVIO Navy¦IPVIO Navy
+NexTV Navy¦NexTV Navy
 Einfacher mit dem Handy¦أسهل مع الهاتف
 Mit der Fernbedienung zu tippen ist mühsam. Schick die Zugangsdaten lieber vom Handy:¦الكتابة بجهاز التحكم مرهقة. أرسل بيانات الدخول من هاتفك بدلًا من ذلك:
 Handy mit demselben WLAN verbinden wie dieses Gerät.¦صل الهاتف بنفس شبكة Wi-Fi التي يتصل بها هذا الجهاز.

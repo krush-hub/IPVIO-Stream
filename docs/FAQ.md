@@ -4,7 +4,7 @@ Short answers to common questions. For the settings themselves see [SETTINGS.md]
 
 ## General
 
-**Is IPVIO Stream free?**
+**Is NexTV free?**
 Yes. It is free and open source (GPL-3.0). It is ad-free, and donations are voluntary and unlock nothing. The developer tries to keep everything free for himself too. Some features may therefore not come at all, if they would cost money to run (for example a paid service). That is a deliberate decision, not an oversight.
 
 **Does the app include channels, films or series?**
@@ -14,7 +14,7 @@ No. It is only a player. You add your own legal playlist (Xtream Codes, M3U or S
 The app is designed for TV and the remote. On phones and tablets it runs in landscape: tap the video to show the controls, double-tap left or right to skip, double-tap in the middle to pause.
 
 **Where can I ask questions or get news?**
-On Reddit: [r/ipvio](https://www.reddit.com/r/ipvio). The source code and issues are on GitHub: [Emrodev/IPVIO-Stream](https://github.com/Emrodev/IPVIO-Stream).
+On Reddit: [r/ipvio](https://www.reddit.com/r/ipvio). The source code and issues are on GitHub: [Emrodev/NexTV-Stream](https://github.com/Emrodev/NexTV-Stream).
 
 **Why is the app GPL-3.0?**
 It includes the Jellyfin FFmpeg audio decoder (GPL-3.0), which is needed for AC3/E-AC3/DTS sound. Derived works must stay open source under the same license.

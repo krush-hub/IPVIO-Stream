@@ -14,7 +14,7 @@ object DriveLogic {
      * Visible folder in the user's Drive. The hidden app folder (scope drive.appdata) is refused by Google in the TV
      * sign-in ("invalid_scope"), so the app uses drive.file: it only sees the folder and files it created itself.
      */
-    const val FOLDER_NAME = "IPVIO Stream Sync"
+    const val FOLDER_NAME = "NexTV Sync"
     const val FOLDER_MIME = "application/vnd.google-apps.folder"
 
     private val ID = Regex("^[A-Za-z0-9]{1,32}$")

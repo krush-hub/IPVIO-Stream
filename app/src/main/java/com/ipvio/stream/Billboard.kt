@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 /*
- * Round 17b – "Cinematic Remake" of the home screen (design "IPVIO Cinematic Remake", picture 1):
+ * Round 17b – "Cinematic Remake" of the home screen (design "NexTV Cinematic Remake", picture 1):
  *  - The whole screen shows the scene image of the selected title (soft crossfade, slow zoom).
  *  - Top left are title, ratings, year, genre, length and description of this title (billboard).
  *  - The selected row stays in the lower half (PivotSpec), rows above disappear.

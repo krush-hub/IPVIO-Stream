@@ -1,6 +1,6 @@
 # Security
 
-Status of known security items and the current security state of IPVIO Stream.
+Status of known security items and the current security state of NexTV.
 Source: refactoring audit of 2026-11-11, section 8 (state at commit `b65e838`, tag `V1.3`), updated for T-002.
 File references are to `app/src/main/java/com/ipvio/stream/` unless stated otherwise.
 
@@ -8,7 +8,7 @@ Status values: **open**, **partly fixed**, **fixed**.
 
 ## 1. Scope
 
-IPVIO Stream is a free, open-source (GPL-3.0) IPTV player for Android TV, Google TV and Fire TV.
+NexTV is a free, open-source (GPL-3.0) IPTV player for Android TV, Google TV and Fire TV.
 It has no accounts and no backend of its own. It does open network connections in these places:
 
 - **Local Wi-Fi:** the phone-remote pages and the Wi-Fi transfer. The TV app runs a small HTTP server on ports 8765–8775 (`PhoneImport.kt:195`).

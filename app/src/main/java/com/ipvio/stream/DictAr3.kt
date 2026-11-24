@@ -209,7 +209,7 @@ Schlüssel ungültig¦المفتاح غير صالح
 Keine Verbindung¦لا يوجد اتصال
 Die Schlüssel bleiben nur auf diesem Gerät. Nach dem Eintragen die App einmal neu starten, damit alle Bereiche die Infos laden. Intro- und Abspann-Zeiten kommen von TheIntroDB und brauchen keinen Schlüssel.¦تبقى المفاتيح على هذا الجهاز فقط. بعد إدخالها، أعد تشغيل التطبيق مرة واحدة حتى تحمّل جميع الأقسام المعلومات. أوقات المقدمة وشارة النهاية مصدرها TheIntroDB ولا تحتاج مفتاحًا.
 Dieses Produkt verwendet die TMDB-API, wird aber nicht von TMDB unterstützt oder zertifiziert. Wertungen: OMDb. Intro-Zeiten: TheIntroDB.¦يستخدم هذا المنتج TMDB API، لكنه غير مدعوم أو معتمد من TMDB. التقييمات: OMDb. أوقات المقدمة: TheIntroDB.
-IPVIO Stream ist freie Software unter der GNU General Public License v3 (GPL-3.0). Verwendete Bibliotheken: AndroidX/Jetpack Compose, Media3 (Apache 2.0), OkHttp, Coil (Apache 2.0), Jellyfin FFmpeg-Decoder (GPL-3.0), Schriften Outfit und Inter (SIL Open Font License).¦IPVIO Stream برنامج حر بموجب رخصة GNU General Public License v3 (GPL-3.0). المكتبات المستخدمة: AndroidX/Jetpack Compose وMedia3 (Apache 2.0) وOkHttp وCoil (Apache 2.0) ومفكك ترميز Jellyfin FFmpeg (GPL-3.0)، وخطّا Outfit وInter (SIL Open Font License).
+NexTV ist freie Software unter der GNU General Public License v3 (GPL-3.0). Verwendete Bibliotheken: AndroidX/Jetpack Compose, Media3 (Apache 2.0), OkHttp, Coil (Apache 2.0), Jellyfin FFmpeg-Decoder (GPL-3.0), Schriften Outfit und Inter (SIL Open Font License).¦NexTV برنامج حر بموجب رخصة GNU General Public License v3 (GPL-3.0). المكتبات المستخدمة: AndroidX/Jetpack Compose وMedia3 (Apache 2.0) وOkHttp وCoil (Apache 2.0) ومفكك ترميز Jellyfin FFmpeg (GPL-3.0)، وخطّا Outfit وInter (SIL Open Font License).
 Automatische Genres brauchen einen TMDB-Schlüssel (Einstellungen > API-Schlüssel).¦التصنيفات التلقائية تحتاج مفتاح TMDB (الإعدادات > مفاتيح API).
 Tipp: Unter Einstellungen > API-Schlüssel einen eigenen TMDB-Schlüssel eintragen, dann erscheinen hier Beschreibung, Cover und Bewertungen.¦تلميح: أدخل مفتاح TMDB الخاص بك في الإعدادات > مفاتيح API، وستظهر هنا الأوصاف والأغلفة والتقييمات.
 Zugang wird geprüft …¦جارٍ التحقق من الحساب…
@@ -332,7 +332,7 @@ Auf dem Handy im Querformat¦على الهاتف بالوضع الأفقي
 Die App ist für den Fernseher gebaut und wirkt quer am besten. Aus: dreht mit dem Gerät. Im Player: Tippen zeigt die Steuerung, Doppeltippen links/rechts spult, in der Mitte Pause.¦التطبيق مصمم للتلفزيون ويعمل بشكل أفضل أفقيًا. إيقاف: يدور مع الجهاز. في المشغّل: النقر يعرض التحكم، والنقر المزدوج يمينًا/يسارًا يقدّم/يؤخّر، وفي المنتصف إيقاف مؤقت.
 Oder mit der Handy-Kamera scannen¦أو امسح بكاميرا الهاتف
 QR-Code scannen¦مسح رمز QR
-Unterstütze IPVIO Stream¦ادعم IPVIO Stream
+Unterstütze NexTV¦ادعم NexTV
 Raster & Ansicht¦الشبكة والعرض
 American Football¦كرة القدم الأمريكية
 Basketball¦كرة السلة
@@ -362,14 +362,14 @@ Dein Anbieter erlaubt vermutlich nur eine Verbindung gleichzeitig. Frage nach ei
 Die Verbindung ist zu langsam oder wurde abgelehnt. Ein Sender in niedrigerer Qualität hilft oft.¦الاتصال بطيء جدًا أو مرفوض. غالبًا ما تساعد قناة بجودة أقل.
 Dein Gerät schafft zwei Videos gleichzeitig nicht. Wähle für beide Bilder SD-Sender.¦جهازك لا يتحمل فيديوهين في الوقت نفسه. اختر قنوات SD للصورتين.
 Probiere einen anderen Sender oder eine niedrigere Qualität.¦جرّب قناة أخرى أو جودة أقل.
-Schon ein anderes Gerät mit IPVIO Stream? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.¦لديك جهاز آخر عليه IPVIO Stream؟ استورد النسخة الاحتياطية: ستتوفر قوائم التشغيل وبيانات الدخول والسجل والمفضلة والإعدادات فورًا بعد ذلك.
+Schon ein anderes Gerät mit NexTV? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.¦لديك جهاز آخر عليه NexTV؟ استورد النسخة الاحتياطية: ستتوفر قوائم التشغيل وبيانات الدخول والسجل والمفضلة والإعدادات فورًا بعد ذلك.
 Sicherung von anderem Gerät einspielen¦استيراد نسخة احتياطية من جهاز آخر
 Auf diesem Gerät gibt es keine Dateiauswahl. Spiele die Sicherung über die Handy-Seite rechts ein.¦لا يوجد اختيار ملفات على هذا الجهاز. استورد النسخة الاحتياطية عبر صفحة الهاتف على اليمين.
 Sicherung mit Playlists speichern …¦جارٍ حفظ نسخة احتياطية مع قوائم التشغيل…
 Auf diesem Gerät gibt es keine Dateiauswahl. Nutze die Übertragung im WLAN.¦لا يوجد اختيار ملفات على هذا الجهاز. استخدم النقل عبر Wi-Fi.
 Gesichert werden Einstellungen, Favoriten, Verlauf, Weiterschauen und Profile. Playlists und Zugangsdaten sind nur in „Sicherung mit Playlists“ enthalten (die Datei enthält Passwörter, gib sie nicht weiter). Beim Wiederherstellen startet die App neu. Auf einem neuen Gerät geht das gleich beim Hinzufügen der ersten Playlist.¦يُنسخ احتياطيًا: الإعدادات والمفضلة والسجل والمتابعة والملفات الشخصية. قوائم التشغيل وبيانات الدخول مضمّنة فقط في «نسخة احتياطية مع قوائم التشغيل» (الملف يحتوي على كلمات مرور، لا تشاركه مع أحد). عند الاستعادة، يعاد تشغيل التطبيق. على جهاز جديد، يمكن فعل ذلك مباشرة عند إضافة أول قائمة تشغيل.
 Wichtig zu wissen¦مهم أن تعرف
-IPVIO Stream ist nur ein Abspielgerät. Die App liefert selbst keine Sender, Filme, Serien und keine Playlist. Den Link oder die Zugangsdaten bekommst du von deinem IPTV-Anbieter oder aus deiner eigenen Quelle. Wir können dir keinen Link nennen.¦IPVIO Stream مجرد مشغّل. لا يقدم التطبيق قنوات أو أفلامًا أو مسلسلات أو قوائم تشغيل. تحصل على الرابط أو بيانات الدخول من مزود IPTV الخاص بك أو من مصدرك الخاص. لا يمكننا تزويدك بأي رابط.
+NexTV ist nur ein Abspielgerät. Die App liefert selbst keine Sender, Filme, Serien und keine Playlist. Den Link oder die Zugangsdaten bekommst du von deinem IPTV-Anbieter oder aus deiner eigenen Quelle. Wir können dir keinen Link nennen.¦NexTV مجرد مشغّل. لا يقدم التطبيق قنوات أو أفلامًا أو مسلسلات أو قوائم تشغيل. تحصل على الرابط أو بيانات الدخول من مزود IPTV الخاص بك أو من مصدرك الخاص. لا يمكننا تزويدك بأي رابط.
 OK = groß¦OK = تكبير
 Handy und dieses Gerät müssen im selben WLAN sein. Halte die Kamera auf das Bild. Es klappt auch aus einiger Entfernung.¦يجب أن يكون الهاتف وهذا الجهاز في نفس شبكة Wi-Fi. وجّه الكاميرا نحو الصورة. يعمل ذلك حتى من مسافة.
 Oder Adresse im Browser eintippen:¦أو اكتب العنوان في المتصفح:

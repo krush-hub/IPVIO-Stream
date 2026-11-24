@@ -138,7 +138,7 @@ object AppSettings {
         searchHistory.clear()
         searchHistory.addAll((p.getString("search_hist", "") ?: "").split("\n").filter { it.isNotBlank() })
         if (p.getInt("look_ver", 1) < 2) {
-            // One-time: set company colors (IPVIO green on navy) as the new default design. A custom color is kept.
+            // One-time: set company colors (NexTV green on navy) as the new default design. A custom color is kept.
             p.edit().putInt("look_accent", 0).putInt("look_bg", 0).putInt("look_ver", 2).commit()
         }
         if (p.getInt("look_ver", 1) < 4) {
@@ -158,7 +158,7 @@ object AppSettings {
             e.putInt("look_accent", 12).putInt("look_bg", 5).commit()
         }
         if (p.getInt("look_ver", 1) < 6) {
-            // One-time (round 13e): back to the default colors (IPVIO green on navy). The design presets no longer exist,
+            // One-time (round 13e): back to the default colors (NexTV green on navy). The design presets no longer exist,
             // the custom color is at position 12 again. Whoever had the custom color before gets it back.
             val e = p.edit().putInt("look_ver", 6)
             val acc = p.getInt("look_accent", 0)

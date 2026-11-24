@@ -63,7 +63,7 @@ Auf dem Handy im Querformat¦Poziomo na telefonach
 Die App ist für den Fernseher gebaut und wirkt quer am besten. Aus: dreht mit dem Gerät. Im Player: Tippen zeigt die Steuerung, Doppeltippen links/rechts spult, in der Mitte Pause.¦Aplikacja jest stworzona dla TV i najlepiej wygląda w poziomie. Wył.: obraca się razem z urządzeniem. W odtwarzaczu: dotknięcie pokazuje sterowanie, podwójne dotknięcie z lewej/prawej przewija, na środku pauzuje.
 Oder mit der Handy-Kamera scannen¦Albo zeskanuj aparatem telefonu
 QR-Code scannen¦Zeskanuj kod QR
-Unterstütze IPVIO Stream¦Wesprzyj IPVIO Stream
+Unterstütze NexTV¦Wesprzyj NexTV
 Raster & Ansicht¦Siatka i widok
 American Football¦Futbol amerykański
 Basketball¦Koszykówka
@@ -93,14 +93,14 @@ Dein Anbieter erlaubt vermutlich nur eine Verbindung gleichzeitig. Frage nach ei
 Die Verbindung ist zu langsam oder wurde abgelehnt. Ein Sender in niedrigerer Qualität hilft oft.¦Połączenie jest zbyt wolne lub zostało odrzucone. Często pomaga kanał w niższej jakości.
 Dein Gerät schafft zwei Videos gleichzeitig nicht. Wähle für beide Bilder SD-Sender.¦Twoje urządzenie nie radzi sobie z dwoma filmami naraz. Wybierz kanały SD dla obu obrazów.
 Probiere einen anderen Sender oder eine niedrigere Qualität.¦Spróbuj innego kanału lub niższej jakości.
-Schon ein anderes Gerät mit IPVIO Stream? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.¦Masz już inne urządzenie z IPVIO Stream? Przywróć kopię zapasową: playlisty, dane logowania, historia, ulubione i ustawienia będą od razu na miejscu.
+Schon ein anderes Gerät mit NexTV? Spiele die Sicherung ein: Playlists, Zugangsdaten, Verlauf, Favoriten und Einstellungen sind danach sofort da.¦Masz już inne urządzenie z NexTV? Przywróć kopię zapasową: playlisty, dane logowania, historia, ulubione i ustawienia będą od razu na miejscu.
 Sicherung von anderem Gerät einspielen¦Przywróć kopię z innego urządzenia
 Auf diesem Gerät gibt es keine Dateiauswahl. Spiele die Sicherung über die Handy-Seite rechts ein.¦To urządzenie nie ma wyboru plików. Przywróć kopię przez stronę na telefonie po prawej.
 Sicherung mit Playlists speichern …¦Zapisz kopię z playlistami …
 Auf diesem Gerät gibt es keine Dateiauswahl. Nutze die Übertragung im WLAN.¦To urządzenie nie ma wyboru plików. Użyj przenoszenia przez Wi-Fi.
 Gesichert werden Einstellungen, Favoriten, Verlauf, Weiterschauen und Profile. Playlists und Zugangsdaten sind nur in „Sicherung mit Playlists“ enthalten (die Datei enthält Passwörter, gib sie nicht weiter). Beim Wiederherstellen startet die App neu. Auf einem neuen Gerät geht das gleich beim Hinzufügen der ersten Playlist.¦Kopia obejmuje ustawienia, ulubione, historię, „Oglądaj dalej” i profile. Playlisty i dane logowania są tylko w „Zapisz kopię z playlistami” (plik zawiera hasła, nie udostępniaj go). Przy przywracaniu aplikacja się zrestartuje. Na nowym urządzeniu możesz to zrobić od razu przy dodawaniu pierwszej playlisty.
 Wichtig zu wissen¦Dobrze wiedzieć
-IPVIO Stream ist nur ein Abspielgerät. Die App liefert selbst keine Sender, Filme, Serien und keine Playlist. Den Link oder die Zugangsdaten bekommst du von deinem IPTV-Anbieter oder aus deiner eigenen Quelle. Wir können dir keinen Link nennen.¦IPVIO Stream to tylko odtwarzacz. Aplikacja sama nie dostarcza kanałów, filmów, seriali ani playlist. Link lub dane logowania otrzymasz od swojego dostawcy IPTV albo z własnego źródła. Nie możemy dać Ci linku.
+NexTV ist nur ein Abspielgerät. Die App liefert selbst keine Sender, Filme, Serien und keine Playlist. Den Link oder die Zugangsdaten bekommst du von deinem IPTV-Anbieter oder aus deiner eigenen Quelle. Wir können dir keinen Link nennen.¦NexTV to tylko odtwarzacz. Aplikacja sama nie dostarcza kanałów, filmów, seriali ani playlist. Link lub dane logowania otrzymasz od swojego dostawcy IPTV albo z własnego źródła. Nie możemy dać Ci linku.
 OK = groß¦OK = powiększ
 Handy und dieses Gerät müssen im selben WLAN sein. Halte die Kamera auf das Bild. Es klappt auch aus einiger Entfernung.¦Telefon i to urządzenie muszą być w tej samej sieci Wi-Fi. Skieruj aparat na obraz. Działa także z pewnej odległości.
 Oder Adresse im Browser eintippen:¦Albo wpisz adres w przeglądarce:
@@ -233,7 +233,7 @@ Boomer Mode jetzt starten¦Uruchom tryb Boomer teraz
 Die App wechselt sofort zur einfachen Oberfläche. Stelle vorher alles ein. Zurück zur normalen App: Zurück-Taste 10 Sekunden halten, dann PIN.¦Aplikacja od razu przełączy się na prosty ekran. Najpierw wszystko skonfiguruj. Powrót do zwykłej aplikacji: przytrzymaj przycisk Wstecz przez 10 sekund, potem wpisz PIN.
 Automatischer Start nach dem Einschalten: bereit¦Automatyczny start po włączeniu: gotowe
 Automatischer Start: Berechtigung „Über anderen Apps einblenden“ fehlt¦Automatyczny start: brak uprawnienia „Wyświetlanie nad innymi aplikacjami”
-Im Boomer Mode öffnet sich IPVIO Stream von selbst, sobald der Fernseher oder die Box eingeschaltet wird. Manche Geräte (z. B. einzelne Fire-TV-Modelle) blockieren das trotzdem.¦W trybie Boomer IPVIO Stream otwiera się sam, gdy tylko telewizor lub przystawka zostanie włączona. Niektóre urządzenia (np. część modeli Fire TV) i tak to blokują.
+Im Boomer Mode öffnet sich NexTV von selbst, sobald der Fernseher oder die Box eingeschaltet wird. Manche Geräte (z. B. einzelne Fire-TV-Modelle) blockieren das trotzdem.¦W trybie Boomer NexTV otwiera się sam, gdy tylko telewizor lub przystawka zostanie włączona. Niektóre urządzenia (np. część modeli Fire TV) i tak to blokują.
 Was der Bildschirm zeigt¦Co pokazuje ekran
 Schalte Reihen ein oder aus und schiebe sie mit „Hoch“ und „Runter“. Reihen ohne Inhalt bleiben automatisch versteckt.¦Włączaj lub wyłączaj wiersze i przesuwaj je „W górę” i „W dół”. Wiersze bez zawartości są automatycznie ukryte.
 Sender auswählen¦Wybierz kanały
