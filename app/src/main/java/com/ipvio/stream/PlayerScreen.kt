@@ -149,6 +149,9 @@ private fun findActivity(c: Context): ComponentActivity? =
 @Composable
 fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesItem: Item? = null, onBack: () -> Unit) {
     val ctx = LocalContext.current
+    // Full screen without the system bars while playing (they eat screen space on phones);
+    // a swipe from the screen edge shows them briefly. The back gesture still works.
+    ImmersiveEffect()
     CatFavs.init(ctx)
     // Own HTTP settings: follows redirects even from http to https (many IPTV servers do that)
     // and gives up after 10 s connect time or 15 s read time instead of waiting forever.
