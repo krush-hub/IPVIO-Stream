@@ -122,7 +122,7 @@ fun LiveTab(liveAll: List<Item>, groupsAll: Map<String, List<Item>>, favsAll: Li
     // Last chosen category / list (round 14): the same one again after Back from the player and after a restart
     // The tab opens on "Start" (home), except when coming back from a stream: then the last category with its channel list.
     // LastFocus.pending is set exactly in that case (MainActivity, back from the player).
-    var sel by remember { mutableStateOf(if (LastFocus.pending != null) LiveMemory.sel(ctx) ?: "HOME" else "HOME") }
+    var sel by remember { mutableStateOf(if (LastFocus.pending != null) LiveMemory.sel(ctx)?.takeIf { !LiveGenre.isGenreKey(it) } ?: "HOME" else "HOME") }
     // The highlighted category follows the focus at once; the channel column (and everything computed from it) follows
     // [sel] only after the focus has rested for a moment. Holding Down in the category column used to rebuild the channel
     // list (grouping, quality bundling, all rows) for every category it passed, which made the scrolling stutter.
@@ -142,14 +142,15 @@ fun LiveTab(liveAll: List<Item>, groupsAll: Map<String, List<Item>>, favsAll: Li
     val myLists = ChannelLists.lists.toList()
     // Only built when an own channel list needs it (thousands of channels, not needed for opening the tab)
     val byIdLazy = remember(live) { lazy { live.associateBy { it.id } } }
-    // Order: favorites, own channel lists, "New channel list", all channels, categories
+    // Order: favorites, own channel lists, all channels, provider categories.
+    // No "New channel list" row and no genre rows (sports, movies, ...) in this list.
     // Recordings (round 20): own category as soon as there are any
     // Reading the recordings folder (also USB storage) is file I/O: done in the background, the last result shows meanwhile
     val recs by produceState(LiveRecCache.items, Recorder.active.size, sel == "REC") {
         value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { Recorder.list(ctx).map { Recorder.itemOf(it) } }
         LiveRecCache.items = value
     }
-    val names = (if (PlaylistStore.lists.size > 1) listOf("PL") else emptyList()) + listOf("HOME", "GUIDE", "SEARCH", "MULTI", FAV_CAT) + (if (recs.isNotEmpty()) listOf("REC") else emptyList()) + myLists.map { ChannelListLogic.key(it) } + listOf("NEW", "ALL") + genres.keys.filter { it !in HiddenCats.list } + favCats + CatOrder.sorted(CatOrder.LIVE, groups.keys.toList()).filter { it !in favCats && it !in HiddenCats.list } + (if (HiddenCats.list.any { it in groups || it in genres }) listOf("HIDDEN") else emptyList())
+    val names = (if (PlaylistStore.lists.size > 1) listOf("PL") else emptyList()) + listOf("HOME", "GUIDE", "SEARCH", "MULTI", FAV_CAT) + (if (recs.isNotEmpty()) listOf("REC") else emptyList()) + myLists.map { ChannelListLogic.key(it) } + listOf("ALL") + favCats + CatOrder.sorted(CatOrder.LIVE, groups.keys.toList()).filter { it !in favCats && it !in HiddenCats.list } + (if (HiddenCats.list.any { it in groups || it in genres }) listOf("HIDDEN") else emptyList())
     val catKeys = remember(names) { val seen = HashSet<String>(); names.mapIndexed { i, n -> if (seen.add(n)) n else "$n#$i" } }
     val curList = ChannelLists.byKey(sel)
     // Own list currently being filled (OK on a channel adds it); declared early because bundling depends on it
