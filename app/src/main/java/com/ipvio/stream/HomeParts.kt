@@ -510,8 +510,9 @@ fun PosterTile(item: Item, modifier: Modifier, reorder: List<Item>? = null, onCl
     val img: String? = when {
         item.kind == Kind.LIVE -> item.logo
         m?.poster != null -> cardPoster(m.poster)
-        st.done -> item.logo
-        else -> null
+        // Capa do Xtream já: antes só aparecia depois que o TMDB terminava, e o cartão
+        // ficava em branco sem capa nem nome enquanto carregava.
+        else -> item.logo
     }
     Box(
         modifier.then(reorderMod).aspectRatio(2f / 3f).graphicsLayer { scaleX = s; scaleY = s }.focusGlow(f, shape).clip(shape)
@@ -523,7 +524,8 @@ fun PosterTile(item: Item, modifier: Modifier, reorder: List<Item>? = null, onCl
         contentAlignment = Alignment.Center
     ) {
         if (favMenu && reorder != null) FavReorderMenu(item, reorder) { favMenu = false }
-        if (img == null && st.done) ArtPlaceholder(item, Modifier.fillMaxSize())
+        // Sem capa nenhuma, mostra o placeholder com o nome na hora (antes só depois do TMDB).
+        if (img == null) ArtPlaceholder(item, Modifier.fillMaxSize())
         if (img != null) AsyncImage(img, item.title, Modifier.fillMaxSize(), contentScale = if (item.kind == Kind.LIVE) ContentScale.Fit else ContentScale.Crop)
         if (item.kind != Kind.SERIES && DeadLinks.isDead(item.url)) AppIcon(AIcon.Warning, DS.Gold, Modifier.align(Alignment.TopStart).padding(dpx(8)), dpx(18))
         // 17c: darkening as a simple surface on top (cheaper than transparency of the whole card)

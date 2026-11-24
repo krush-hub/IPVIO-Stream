@@ -428,7 +428,11 @@ fun LiveTab(liveAll: List<Item>, groupsAll: Map<String, List<Item>>, favsAll: Li
                             onFav = { if (ml != null) listMenu = true else if (plainCat) catMenu = true else if (LiveGenre.isGenreKey(n)) genMenu = true else if (n != FAV_CAT && n != "ALL" && n != "REC" && !LiveGenre.isGenreKey(n)) CatFavs.toggle(ctx, n) },
                             icon = icon, raw = ml != null,
                             floating = plainCat && floatingCat == n
-                        ) { if (floatingCat == null) enterChannels() }
+                        ) {
+                            // Toque (celular) não move o foco como o controle remoto: sem isso a categoria
+                            // nunca trocava no toque. Seleciona direto e entra na lista de canais.
+                            if (floatingCat == null) { hot = n; sel = n; enterChannels() }
+                        }
                         // Menu of a provider category: favorite on/off, hide, move, sorting of all categories
                         var sortMenu by remember { mutableStateOf(false) }
                         // Menu of a genre category (Sports, Movies, ...): hide
