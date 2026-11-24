@@ -197,7 +197,8 @@ fun ChannelOverlay(
     Row(Modifier.fillMaxSize()) {
         if (showCats) {
             Column(
-                Modifier.fillMaxHeight().width(300.dp).background(Color(0xF50C0D16)).padding(16.dp)
+                // Transparent: the video keeps showing through while browsing categories.
+                Modifier.fillMaxHeight().width(300.dp).background(Color.Transparent).padding(16.dp)
                     .onPreviewKeyEvent { e ->
                         if (e.type != KeyEventType.KeyDown) false
                         else if (e.key == Key.DirectionRight) { onShowCats(false); true }
@@ -226,8 +227,10 @@ fun ChannelOverlay(
             }
         }
         Column(
+            // Transparent: the video keeps showing through while browsing channels; only the
+            // channel names (and the focused row's highlight) sit over the picture.
             Modifier.fillMaxHeight().width(430.dp).clip(panelShape)
-                .background(PT.PanelBg).padding(16.dp)
+                .background(Color.Transparent).padding(16.dp)
                 .onPreviewKeyEvent { e ->
                     if (e.type != KeyEventType.KeyDown) false
                     else if (e.key == Key.DirectionRight && !showCats && !inHeader) { onClose(); true }
