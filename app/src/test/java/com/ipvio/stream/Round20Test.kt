@@ -19,8 +19,8 @@ class Round20Test {
     }
 
     @Test fun picksApk() {
-        val a = listOf("notes.txt" to "https://x/notes.txt", "app-release.apk" to "https://x/a.apk", "IPVIO-Stream.apk" to "https://x/i.apk")
-        assertEquals("https://x/i.apk", UpdateLogic.pickApk(a))
+        val a = listOf("notes.txt" to "https://x/notes.txt", "app-release.apk" to "https://x/a.apk", "NexTV.apk" to "https://x/n.apk")
+        assertEquals("https://x/n.apk", UpdateLogic.pickApk(a))
         assertEquals("https://x/a.apk", UpdateLogic.pickApk(a.take(2)))
         assertNull(UpdateLogic.pickApk(a.take(1)))
     }
