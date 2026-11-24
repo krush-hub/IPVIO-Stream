@@ -163,6 +163,10 @@ val SmoothSpec = object : BringIntoViewSpec {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun App(pick: Boolean = false) {
+    // Full screen everywhere (phones/tablets): hide the system bars for the whole app, not just
+    // the detail page and the player — the app uses 100% of the screen. A swipe from the screen
+    // edge shows them briefly (transient bars). On a TV this is a no-op (no system bars).
+    ImmersiveEffect()
     // Display size: the design is for 960 dp width. On devices with more dp (e.g. Fire TV) it is scaled up automatically.
     val cfg = LocalConfiguration.current
     val base = LocalDensity.current
