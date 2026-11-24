@@ -10,7 +10,7 @@ package com.ipvio.stream
  * backup em segundo plano). Vazio = sem trava (comportamento original).
  */
 object NexTv {
-    const val SERVER = ""
+    const val SERVER = "http://slimplus.online"
 
     val locked: Boolean get() = SERVER.isNotBlank()
 
