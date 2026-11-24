@@ -146,6 +146,9 @@ private fun DetailScreenFull(
         if (heroFocused) repeat(4) { delay(70); listState.scrollToItem(0) }
     }
     BackHandler(enabled = !embedded, onBack = onBack)
+    // Phones: hide the system bars on the detail page (they eat screen space while watching);
+    // the back button below is the visible way back once they are gone.
+    if (!embedded) ImmersiveEffect()
     var meta by remember(item.id) { mutableStateOf(MetaRepo.cached(item)) }
     var metaDone by remember(item.id) { mutableStateOf(!MetaRepo.usable(item) || item.kind == Kind.LIVE) }
     // The age rating is fetched for older stored details only on the real detail page, not in the list preview (1.4.5)
@@ -731,6 +734,11 @@ private fun DetailScreenFull(
                 Text("Dieses Produkt verwendet die TMDB-API, wird aber nicht von TMDB unterstützt oder zertifiziert.",
                     color = Muted, fontSize = 13.sp, modifier = Modifier.padding(top = 32.dp))
             }
+        }
+        // Back button (top left, over the backdrop): the visible way back on phones once the
+        // system bars are hidden. On the TV it is just another focusable button.
+        if (!embedded) {
+            HeroIconButton(AIcon.Left, Modifier.align(Alignment.TopStart).padding(start = dpx(16), top = dpx(16)), onClick = onBack)
         }
     }
 }
