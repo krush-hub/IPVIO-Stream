@@ -7,10 +7,10 @@ package com.ipvio.stream
 object SportLogic {
     // Word boundaries prevent hits like "Transport"; brands without a word boundary (Eurosport, DAZN …) stand alone.
     private val CHANNEL = Regex(
-        """\b(sports?|spor|sportklub|sportdigital|deportes?|esportes?|sportivo)\b|eurosport|dazn|espn|bein\s?sports?|sky\s?sports?|supersport|""" +
-            """ziggo\s?sport|setanta|\btsn\d?\b|arena\s?sport|nova\s?sport|polsat\s?sport|eleven\s?sports?|\bfox\s?sports?\b|""" +
-            """laliga|bundesliga|premier\s?league|champions\s?league|\b(nba|nfl|nhl|mlb|ufc|wwe|f1|motogp|ppv)\b|formula\s?1|formel\s?1|""" +
-            """\b(tennis|golf|rugby|cricket|racing|fight|fußball|fussball|football|soccer|futbol|calcio|darts|snooker)\b""",
+        """\b(sports?|spor|sportklub|sportdigital|deportes?|esportes?|sportivo|futebol)\b|eurosport|dazn|espn|bein\s?sports?|sky\s?sports?|supersport|""" +
+            """ziggo\s?sport|setanta|premiere|\btsn\d?\b|arena\s?sport|nova\s?sport|polsat\s?sport|eleven\s?sports?|\bfox\s?sports?\b|""" +
+            """laliga|bundesliga|premier\s?league|champions\s?league|\b(nba|nfl|nhl|mlb|ufc|wwe|f1|motogp|ppv)\b|formula\s?1|formel\s?1|\bmax\b|\btnt\b|""" +
+            """\b(tennis|golf|rugby|cricket|racing|fight|fußball|fussball|football|soccer|futbol|fútbol|calcio|darts|snooker)\b""",
         RegexOption.IGNORE_CASE
     )
     // Show titles that are almost always sports (for shows on general channels)
@@ -19,7 +19,9 @@ object SportLogic {
             """dfb[-\s]?pokal|fa\s?cup|em\s?20\d\d|wm\s?20\d\d|world\s?cup|euro\s?20\d\d|olymp\w*|formel\s?1|formula\s?1|grand\s?prix|""" +
             """motogp|nba|nfl|nhl|mlb|ufc|wwe|boxen|boxing|tennis|wimbledon|roland\s?garros|us\s?open|australian\s?open|""" +
             """handball|basketball|volleyball|eishockey|ice\s?hockey|biathlon|ski\s?alpin|skispringen|tour\s?de\s?france|radsport|""" +
-            """darts|snooker|golf|rugby|cricket|sportschau|sportstudio|live:\s|fußball|fussball|football|soccer)\b""",
+            """darts|snooker|golf|rugby|cricket|sportschau|sportstudio|live:\s|fußball|fussball|football|soccer|futebol|fútbol)\b|""" +
+            // "Team A x Team B" titles (no league word in the title): still a sports show
+            """\w+\s+x\s+\w+""",
         RegexOption.IGNORE_CASE
     )
 
@@ -38,7 +40,10 @@ object SportLogic {
         val now = ArrayList<Slot>()
         val soon = ArrayList<Slot>()
         val seen = HashSet<String>()
-        for (ch in channels) {
+        // Sports channels first (stable sort keeps the playlist order inside each group): with a big playlist the
+        // cap below used to cut off before the sports channels at the end of the list were even scanned.
+        val ordered = channels.sortedByDescending { isSportChannel(it) }
+        for (ch in ordered) {
             val sportCh = isSportChannel(ch)
             val list = progs(ch)
             if (list.isEmpty()) continue
