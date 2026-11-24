@@ -39,6 +39,7 @@ import androidx.compose.ui.window.Dialog
  * your own channel list, in this order:
  *  1. chosen by hand ("Assign channel", [SportFix]),
  *  2. TV guide: a show on one of your channels around the start time whose title names both teams (or the race / tournament),
+ *     or — fallback — names only the league, when this is the only game of that league live in that window ([leagueFallback]),
  *  3. channel name: the channel itself names both teams (event channels of some providers).
  * No URL is ever built; playing uses the normal player.
  */
@@ -64,6 +65,24 @@ object SportWatch {
         SportData.KIND_GOLF -> GOLF.containsMatchIn(text)
         SportData.KIND_FIGHT -> UFC.containsMatchIn(text) || SportData.matches(g, text)
         else -> SportData.matches(g, text)
+    }
+
+    /**
+     * Fallback for EPG titles that name the league but not the teams ("UEFA Champions League", "Liga dos Campeões"):
+     * the show counts only when it names exactly one league — the game's league — and this game is the only one of
+     * that league live in the show's time window (checked against the loaded results). With several games of the
+     * same league at the same time (e.g. seven Champions League games at 20:00) no channel is linked: a generic
+     * title cannot say which game that channel shows.
+     */
+    fun leagueFallback(g: SportData.Game, s: SportLogic.Slot): Boolean {
+        if (SportData.kindOf(g) != SportData.KIND_TEAM) return false
+        if (SportData.leagueOfText(s.prog.title + " " + s.prog.desc)?.name != g.league) return false
+        val gEnd = if (g.end > g.start) g.end else g.start + 3 * 3600
+        val cands = SportFeed.latest.values.filter {
+            it.league == g.league && it.state == 1 && it.start < s.prog.end &&
+                (if (it.end > it.start) it.end else it.start + 3 * 3600) >= s.prog.start
+        }
+        return cands.size == 1 && cands[0].key == g.key
     }
 
     private val cache = HashMap<String, Pair<Int, List<Hit>>>()
@@ -93,6 +112,7 @@ object SportWatch {
             val timeOk = (s.live && g.state == 1) || kotlin.math.abs(s.prog.start - g.start) <= 3 * 3600 ||
                 (multiDay && s.prog.start in g.start..g.end && g.state != 2)
             if (timeOk && showMatches(g, s.prog.title + " " + s.prog.desc)) out.add(Hit(s.ch, 1, s.prog.title))
+            else if (timeOk && leagueFallback(g, s)) out.add(Hit(s.ch, 1, s.prog.title))
         }
         SportData.channelsFor(g, sportChannels(live)).forEach { out.add(Hit(it, 2, "")) }
         val r = out.distinctBy { it.ch.id }
