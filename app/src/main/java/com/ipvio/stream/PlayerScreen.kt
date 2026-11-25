@@ -347,6 +347,18 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
         if (now - lastStepT >= gap) stepSeek(d, turboStepMs(lvl, step, player.duration))
     }
 
+    // Drag scrubbing on the timeline (touch): set the preview target; the existing
+    // LaunchedEffect(scrubStamp) commits the seek 450 ms after the last move.
+    fun scrubTo(t: Long) {
+        val dd = player.duration
+        var tt = t.coerceAtLeast(0L)
+        if (dd > 0) tt = tt.coerceAtMost((dd - 1000).coerceAtLeast(0L))
+        scrubTarget = tt
+        scrubStamp = System.currentTimeMillis()
+        lastStepT = scrubStamp
+        ping()
+    }
+
     fun switchTo(it: Item, src: List<Item>) {
         if ((cur.live || cur.archive != null) && cur.itemId != it.id) lastChId = cur.itemId
         History.add(ctx, it.id)
@@ -1504,7 +1516,8 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                             onFocus = { if (it) ctrlLabel = "Zeitleiste  ·  Links/Rechts = $stepS s springen  ·  Halten = weiter springen" },
                             onDown = { runCatching { firstFocus.requestFocus() } },
                             onSeekKey = { stepSeek(it) },
-                            onRepeat = { repeatSeek(it) }
+                            onRepeat = { repeatSeek(it) },
+                            onScrub = { scrubTo(it) }
                         )
                         PTimeRow(posNow, durNow)
                         Spacer(Modifier.height(14.dp))
