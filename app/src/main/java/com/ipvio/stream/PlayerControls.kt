@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -47,7 +48,9 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -195,19 +198,32 @@ private fun PTimeBubble(pos: () -> Long, dur: () -> Long) {
     }
 }
 
-/** Focusable timeline: Left/Right jump, holding jumps further, Down goes to the buttons. */
+/** Focusable timeline: Left/Right jump, holding jumps further, Down goes to the buttons.
+ *  Touch: drag horizontally to scrub to any position (the seek commits 450 ms after the last move). */
 @Composable
 fun PSeekBar(
     modifier: Modifier,
     pos: () -> Long, dur: () -> Long, buffered: () -> Long, segs: () -> List<Seg>,
     scrubbing: () -> Boolean,
     onFocus: (Boolean) -> Unit,
-    onDown: () -> Unit, onSeekKey: (Int) -> Unit, onRepeat: (Int) -> Unit
+    onDown: () -> Unit, onSeekKey: (Int) -> Unit, onRepeat: (Int) -> Unit,
+    onScrub: (Long) -> Unit
 ) {
     var f by remember { mutableStateOf(false) }
     val active = f || scrubbing()
+    var barW by remember { mutableStateOf(0) }
     Box(
         modifier.height(32.dp)
+            .onSizeChanged { barW = it.width }
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures { change, _ ->
+                    val w = barW
+                    if (w > 0) {
+                        val frac = (change.position.x / w).coerceIn(0f, 1f)
+                        onScrub((frac * dur()).toLong())
+                    }
+                }
+            }
             .onFocusChanged { f = it.isFocused; onFocus(it.isFocused) }
             .onKeyEvent { e ->
                 if (e.type != KeyEventType.KeyDown) false
