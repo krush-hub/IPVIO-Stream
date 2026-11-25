@@ -56,6 +56,18 @@ object Mem {
         return b.build()
     }
 
+    /** Live TV: same stall protection as [loadControl], but playback starts after 800 ms instead of 1.5–2.5 s,
+     *  so zapping shows the first frame in under a second. The learned level grows min/max, but the start
+     *  stays capped at 800 ms — otherwise the learned level would push it back up. */
+    fun liveLoadControl(ctx: Context): DefaultLoadControl {
+        val p = BufferLogic.scale(bufferPlan(tier(ctx)), BufferLogic.level(AppSettings.bufferMode, AppSettings.bufferLearned))
+        p[2] = 800
+        val b = DefaultLoadControl.Builder().setBufferDurationsMs(p[0], p[1], p[2], p[3])
+        val bytes = BufferLogic.byteLimit(p[4], Runtime.getRuntime().maxMemory())
+        if (bytes > 0) b.setTargetBufferBytes(bytes).setPrioritizeTimeOverSizeThresholds(false)
+        return b.build()
+    }
+
     /** True if the app's Java memory is used by more than [limit] (background work then stops instead of crashing). */
     fun heapTight(limit: Double = 0.75): Boolean {
         val r = Runtime.getRuntime()
