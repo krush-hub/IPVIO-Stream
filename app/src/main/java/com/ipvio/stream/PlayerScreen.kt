@@ -317,7 +317,7 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
 
     fun ping() { miniBar = true; miniTick++ }
 
-    fun openChannels() { focusedCh = curItem; showCats = false; chanCat = playCat; showChannels = true }
+    fun openChannels() { focusedCh = curItem; showCats = false; chanCat = playCat; showChannels = true; controls = false }
 
     fun togglePlay() { if (player.isPlaying) player.pause() else player.play() }
 
@@ -388,6 +388,11 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
         val pp = panelParent
         panelParent = Panel.NONE
         panel = if (pp != Panel.NONE) pp else Panel.NONE
+    }
+
+    // Phone: tapping the button of an already open menu closes it (there is no Back key on the phone).
+    fun togglePanel(p: Panel) {
+        if (panel == p) { panel = Panel.NONE; panelParent = Panel.NONE } else openPanel(p)
     }
 
     // Live: the same channel in several qualities (4K / Full HD / HD / SD as separate playlist entries), best first.
@@ -1449,7 +1454,7 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                                     val e = Epg.current(epg)
                                     if (ch != null && e != null) playArchive(ch, e) else flash = Flash(null, "Kein Programm bekannt")
                                 }) { AppIcon(AIcon.Catchup, it, size = 26.dp) }
-                                PRoundButton(Modifier.focusRequester(btn.getValue(Panel.ARCHIVE)), label = "Archiv: verpasste Sendungen", onLabel = setLabel, onClick = { openPanel(Panel.ARCHIVE) }) {
+                                PRoundButton(Modifier.focusRequester(btn.getValue(Panel.ARCHIVE)), label = "Archiv: verpasste Sendungen", onLabel = setLabel, onClick = { togglePanel(Panel.ARCHIVE) }) {
                                     AppIcon(AIcon.History, it, size = 26.dp)
                                 }
                             }
@@ -1463,30 +1468,31 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                                 val ci = curItem
                                 if (favMenu && ci != null) ChannelMenu(ci, null, null) { favMenu = false }
                             }
-                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.TRACKS)), label = "Audio & Untertitel", onLabel = setLabel, onClick = { openPanel(Panel.TRACKS) }) {
+                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.TRACKS)), label = "Audio & Untertitel", onLabel = setLabel, onClick = { togglePanel(Panel.TRACKS) }) {
                                 PlayerIcon(PIcon.AudioSubs, it)
                             }
-                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.ASPECT)), label = "Bildformat", onLabel = setLabel, onClick = { openPanel(Panel.ASPECT) }) {
+                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.ASPECT)), label = "Bildformat", onLabel = setLabel, onClick = { togglePanel(Panel.ASPECT) }) {
                                 PlayerIcon(PIcon.Aspect, it)
                             }
                             // Second stream (round 22): without a second picture channel selection, otherwise the menu with arrangement, audio and swap
                             PRoundButton(label = "Zusatzbild", onLabel = setLabel, onClick = {
-                                if (second == null) { pickSecond = true; controls = false; openChannels() } else openPanel(Panel.MENU)
+                                if (second == null) { pickSecond = true; controls = false; openChannels() } else togglePanel(Panel.MENU)
                             }) {
                                 AppIcon(AIcon.Layers, it, size = 26.dp)
                             }
-                            // Live channel with several qualities: pick the stream (4K / Full HD / HD / SD)
-                            if (cur.live && liveAlts.size > 1) PRoundButton(label = "Qualität", onLabel = setLabel, onClick = { openPanel(Panel.QUALITY) }) {
-                                AppIcon(AIcon.Sliders, it, size = 26.dp)
+                            // Live channel with several qualities: pick the stream (4K / Full HD / HD / SD).
+                            // The button shows the current quality as red text instead of a meaningless icon.
+                            if (cur.live && liveAlts.size > 1) {
+                                val curQ = liveAlts.firstOrNull { it.url == cur.url }?.label?.substringBefore("  ·  ")?.ifBlank { null } ?: "HD"
+                                PRoundButton(label = "Qualität", onLabel = setLabel, width = 96.dp, onClick = { togglePanel(Panel.QUALITY) }) {
+                                    Text(raw = true, text = curQ, color = Color(0xFFE50914), fontSize = 16.sp, fontWeight = FontWeight.ExtraBold, maxLines = 1)
+                                }
                             }
                             if (SportAlerts.miniOn || SportAlerts.pinned.isNotEmpty()) PRoundButton(label = "Score-Overlay", onLabel = setLabel, onClick = { scoreDlg = true }) {
                                 AppIcon(AIcon.Live, it, size = 26.dp)
                             }
-                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.MENU)), label = "Einstellungen", onLabel = setLabel, onClick = { openPanel(Panel.MENU) }) {
+                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.MENU)), label = "Einstellungen", onLabel = setLabel, onClick = { togglePanel(Panel.MENU) }) {
                                 PlayerIcon(PIcon.Settings, it)
-                            }
-                            PRoundButton(label = "Extern öffnen", onLabel = setLabel, onClick = { player.pause(); openExternal(ctx, cur.url, cur.title) }) {
-                                PlayerIcon(PIcon.External, it)
                             }
                         }
                         Row(
@@ -1564,19 +1570,19 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                                         PRoundButton(label = "Zurück zu Live", onLabel = setLabel, onClick = { backToLive() }) {
                                             AppIcon(AIcon.Live, it, size = 26.dp)
                                         }
-                                        PRoundButton(Modifier.focusRequester(btn.getValue(Panel.ARCHIVE)), label = "Archiv: verpasste Sendungen", onLabel = setLabel, onClick = { openPanel(Panel.ARCHIVE) }) {
+                                        PRoundButton(Modifier.focusRequester(btn.getValue(Panel.ARCHIVE)), label = "Archiv: verpasste Sendungen", onLabel = setLabel, onClick = { togglePanel(Panel.ARCHIVE) }) {
                                             AppIcon(AIcon.History, it, size = 26.dp)
                                         }
                                     }
-                                    PRoundButton(Modifier.focusRequester(btn.getValue(Panel.TRACKS)), label = "Audio & Untertitel", onLabel = setLabel, onClick = { openPanel(Panel.TRACKS) }) {
+                                    PRoundButton(Modifier.focusRequester(btn.getValue(Panel.TRACKS)), label = "Audio & Untertitel", onLabel = setLabel, onClick = { togglePanel(Panel.TRACKS) }) {
                                         PlayerIcon(PIcon.AudioSubs, it)
                                     }
                                     if (epList.size > 1) {
-                                        PRoundButton(Modifier.focusRequester(btn.getValue(Panel.EPISODES)), label = "Folgen", onLabel = setLabel, onClick = { openPanel(Panel.EPISODES) }) {
+                                        PRoundButton(Modifier.focusRequester(btn.getValue(Panel.EPISODES)), label = "Folgen", onLabel = setLabel, onClick = { togglePanel(Panel.EPISODES) }) {
                                             PlayerIcon(PIcon.Episodes, it)
                                         }
                                     }
-                                    PRoundButton(Modifier.focusRequester(btn.getValue(Panel.MENU)), label = "Einstellungen", onLabel = setLabel, onClick = { openPanel(Panel.MENU) }) {
+                                    PRoundButton(Modifier.focusRequester(btn.getValue(Panel.MENU)), label = "Einstellungen", onLabel = setLabel, onClick = { togglePanel(Panel.MENU) }) {
                                         PlayerIcon(PIcon.Settings, it)
                                     }
                                 }
@@ -1812,7 +1818,6 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                         add(MenuEntry(11, "Technik-Info", if (techOn) "An" else "Aus", false))
                                         add(MenuEntry(8, "Sleep-Timer", if (sleepIdx == 0) "Aus" else SLEEP_MIN[sleepIdx].toString() + " min", true))
                         if (cur.live && lastChId != null) add(MenuEntry(9, "Letzter Kanal", null, false))
-                        add(MenuEntry(7, "Extern öffnen", null, false))
                     }
                     val focusAt = menuSel.coerceIn(0, entries.lastIndex)
                     // Starts so that the last chosen row is drawn (otherwise focus cannot find it and keys go nowhere)
@@ -1850,12 +1855,7 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                                     }
                                     5 -> AppSettings.setPlayerExtra(ctx, !AppSettings.autoNext, AppSettings.hideSec, AppSettings.showEndTime, AppSettings.autoSkipIntro)
                                     6 -> AppSettings.setPlayerExtra(ctx, AppSettings.autoNext, AppSettings.hideSec, !AppSettings.showEndTime, AppSettings.autoSkipIntro)
-                                    else -> {
-                                        player.pause()
-                                        openExternal(ctx, resolvedUrl.ifEmpty { cur.url }, cur.title)
-                                        panel = Panel.NONE
-                                        panelParent = Panel.NONE
-                                    }
+                                    else -> { /* no-op: "Extern öffnen" was removed (useless in the player) */ }
                                 }
                             }
                         }
