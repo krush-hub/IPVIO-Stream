@@ -388,7 +388,10 @@ object PlaylistStore {
         // #112: never replace an unreadable saved list without keeping it (the link and login may still be recoverable)
         val prev = prefs(c).getString("lists_enc", null)
         if (prev != null && Secrets.decrypt(prev) == null && !prefs(c).contains("lists_enc_unreadable")) e.putString("lists_enc_unreadable", prev)
-        if (token != null) e.putString("lists_enc", token).remove("lists")
+        // NexTV: keep a plain-text copy of the list as a fallback. If the keystore key is ever lost
+        // (decrypt fails), the login is recovered from it instead of showing the login screen.
+        // Only an explicit playlist removal (or uninstalling the app) logs the user out.
+        if (token != null) e.putString("lists_enc", token).putString("lists", a.toString())
         else e.putString("lists", a.toString()).remove("lists_enc")
         e.apply()
     }
