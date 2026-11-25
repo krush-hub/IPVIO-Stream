@@ -55,12 +55,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/** Round control button. Focus = white surface with a dark icon (easily recognizable from 3 m). */
+/** Rectangular control button (user's wish: round buttons became rounded rectangles, so text like "Full HD" fits). Focus = white surface with a dark icon (easily recognizable from 3 m). */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PRoundButton(
     modifier: Modifier = Modifier,
     size: Dp = PT.BtnSize,
+    width: Dp? = null,
     enabled: Boolean = true,
     label: String = "",
     onLabel: (String) -> Unit = {},
@@ -73,8 +74,8 @@ fun PRoundButton(
         modifier
             .focusProperties { canFocus = enabled }
             .graphicsLayer { scaleX = sc; scaleY = sc }
-            .size(size)
-            .clip(CircleShape)
+            .then(if (width != null) Modifier.width(width).height(size) else Modifier.size(size))
+            .clip(RoundedCornerShape(14.dp))
             .background(if (f) Color.White else PT.BtnBg)
             .onFocusChanged { f = it.isFocused; if (it.isFocused) onLabel(label) }
             .clickable(enabled = enabled, onClick = onClick),
@@ -309,7 +310,8 @@ fun BoxScope.PPanelFrame(
     Column(
         Modifier.align(Alignment.TopEnd).padding(top = PT.MarginY, end = PT.MarginY)
             .width(width).heightIn(max = maxH)
-            .clip(shape).background(PT.PanelBg).border(1.dp, PT.PanelBorder, shape)
+            // Transparent: the video keeps showing through every player menu (user's wish).
+            .clip(shape).background(Color.Transparent).border(1.dp, PT.PanelBorder, shape)
             // W-006: the focus never leaves an open menu with the arrow keys (Down at the end used to close it).
             // "exit" is called only when the focus would leave the menu; only Back (or Left in a submenu) closes it.
             .focusProperties { exitTo { FocusRequester.Cancel } }
