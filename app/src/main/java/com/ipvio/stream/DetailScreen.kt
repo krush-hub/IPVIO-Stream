@@ -46,18 +46,6 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 
-fun openTrailer(ctx: Context, key: String?, title: String) {
-    val i = Intent(Intent.ACTION_VIEW, Uri.parse(TrailerLogic.externalUrl(key, title))).addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION)
-    // From an activity the trailer app starts in the app's own task, so Back returns to the detail page;
-    // a new task is only needed when the context is not an activity
-    if (ctx !is android.app.Activity) i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    try {
-        ctx.startActivity(i)
-    } catch (e: Exception) {
-        Toast.makeText(ctx, Lang.tr("Keine App zum Öffnen des Trailers gefunden"), Toast.LENGTH_LONG).show()
-    }
-}
-
 fun openExternal(ctx: Context, url: String, title: String) {
     val i = Intent(Intent.ACTION_VIEW).setDataAndType(Uri.parse(url), "video/*").putExtra("title", title)
     try {
@@ -524,10 +512,6 @@ private fun DetailScreenFull(
                             // Round 14: movies and series as favorites (appear under "Favorites")
                             val fav = Library.isFav(item.id)
                             HeroIconButton(if (fav) AIcon.HeartFilled else AIcon.Heart, Modifier, bh, tint = if (fav) Color(0xFFE50914) else null) { Library.toggleFav(ctx, item.id) }
-                            HeroButton("Trailer", AIcon.Play, false, Modifier, bh) {
-                                // T-032: opens YouTube at once (the in-app player showed no picture on test devices)
-                                openTrailer(ctx, meta?.trailerKey, item.title)
-                            }
                             // Watched by hand: movie, season, whole series (also reachable per episode: long OK / menu key on the row)
                             // A finished resume point would otherwise keep offering "Continue"
                             fun dropResume(keys: Collection<Long>) {
