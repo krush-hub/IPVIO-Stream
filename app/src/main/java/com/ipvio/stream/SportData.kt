@@ -56,82 +56,40 @@ object SportData {
      *  when the EPG names the league instead of the teams (see [leagueOfText]). */
     class League(val name: String, val path: String, val catName: String, val sport: String = "soccer", val kind: Int = KIND_TEAM, val alias: String = "")
 
-    /** The ten sports of the hub in display order (key, German label). */
+    /** Only soccer: the hub shows football leagues only (Rodrigo, 25/11/2026 — no other sports). */
     class Sport(val key: String, val label: String)
 
     val SPORTS = listOf(
-        Sport("soccer", "Fußball"), Sport("basketball", "Basketball"), Sport("nfl", "NFL"), Sport("nhl", "NHL"),
-        Sport("tennis", "Tennis"), Sport("f1", "Formel 1"), Sport("mlb", "MLB"), Sport("ufc", "UFC"),
-        Sport("cricket", "Cricket"), Sport("golf", "Golf")
+        Sport("soccer", "Fußball")
     )
 
     /**
-     * T-049c: more competitions (UK tiers and cups, more European and world competitions, WNBA, college basketball, LPGA, DP World Tour).
-     * They use the same ESPN scoreboard as the leagues above. The paths are **unverified** (not tried against the live service here);
-     * a path that does not answer simply shows no games. They start switched off (see [SportLeagues]), so nothing new is queried
-     * until the user switches a league on in Settings > Sports Hub.
+     * Extra leagues, removed 25/11/2026 (Rodrigo: football majors only). The list used to hold
+     * second divisions, cups, national-team tournaments and other sports (NBA, NFL, F1, ...);
+     * all of them are out. Kept as an empty list so [EXTRA_NAMES] and the [LEAGUES] sum keep working.
      */
-    private val EXTRA_LEAGUES = listOf(
-        League("Championship", "soccer/eng.2", "Fußball"),
-        League("League One", "soccer/eng.3", "Fußball"),
-        League("League Two", "soccer/eng.4", "Fußball"),
-        League("FA Cup", "soccer/eng.fa", "Fußball", alias = "copa da inglaterra"),
-        League("EFL Cup", "soccer/eng.league_cup", "Fußball"),
-        League("Scottish Premiership", "soccer/sco.1", "Fußball"),
-        League("Scottish Championship", "soccer/sco.2", "Fußball"),
-        League("Scottish Cup", "soccer/sco.tennents", "Fußball"),
-        League("Eredivisie", "soccer/ned.1", "Fußball"),
-        League("Primeira Liga", "soccer/por.1", "Fußball"),
-        League("Süper Lig", "soccer/tur.1", "Fußball"),
-        League("Belgian Pro League", "soccer/bel.1", "Fußball"),
-        League("Conference League", "soccer/uefa.europa.conf", "Fußball", alias = "liga conferencia"),
-        League("DFB-Pokal", "soccer/ger.dfb_pokal", "Fußball", alias = "copa da alemanha"),
-        League("Copa del Rey", "soccer/esp.copa_del_rey", "Fußball", alias = "copa do rei"),
-        League("Coppa Italia", "soccer/ita.coppa_italia", "Fußball", alias = "copa da italia"),
-        League("Coupe de France", "soccer/fra.coupe_de_france", "Fußball", alias = "copa da franca"),
-        League("Nations League", "soccer/uefa.nations", "Fußball"),
-        League("European Championship", "soccer/uefa.euro", "Fußball"),
-        League("World Cup", "soccer/fifa.world", "Fußball"),
-        League("NWSL", "soccer/usa.nwsl", "Fußball"),
-        League("WNBA", "basketball/wnba", "Basketball", "basketball"),
-        League("College Basketball (men)", "basketball/mens-college-basketball", "Basketball", "basketball"),
-        League("LPGA Tour", "golf/lpga", "Golf", "golf", KIND_GOLF),
-        League("DP World Tour", "golf/eur", "Golf", "golf", KIND_GOLF)
-    )
+    private val EXTRA_LEAGUES = emptyList<League>()
 
+    /** Football only, majors only, in display order (Rodrigo, 25/11/2026): Brasileirão A and B, Libertadores,
+     *  Champions League and the other big European leagues. No other sports, no second divisions
+     *  (except Brasileirão Série B), no cups, no national-team tournaments. */
     val LEAGUES = listOf(
-        League("Bundesliga", "soccer/ger.1", "Fußball", alias = "campeonato alemao"),
-        League("2. Bundesliga", "soccer/ger.2", "Fußball"),
-        League("Premier League", "soccer/eng.1", "Fußball", alias = "campeonato ingles"),
-        League("LaLiga", "soccer/esp.1", "Fußball", alias = "campeonato espanhol"),
-        League("Serie A", "soccer/ita.1", "Fußball", alias = "campeonato italiano"),
-        League("Ligue 1", "soccer/fra.1", "Fußball", alias = "campeonato frances"),
-        League("Champions League", "soccer/uefa.champions", "Fußball", alias = "liga dos campeoes"),
-        League("Europa League", "soccer/uefa.europa", "Fußball", alias = "liga europa"),
         League("Brasileirão Série A", "soccer/bra.1", "Fußball", alias = "brasileirao|campeonato brasileiro"),
         League("Brasileirão Série B", "soccer/bra.2", "Fußball", alias = "brasileirao serie b"),
         League("Copa Libertadores", "soccer/conmebol.libertadores", "Fußball", alias = "libertadores"),
-        // Wishbox: North American leagues (same ESPN scoreboard as the others)
-        League("MLS", "soccer/usa.1", "Fußball"),
-        League("Liga MX", "soccer/mex.1", "Fußball"),
-        League("NBA", "basketball/nba", "Basketball", "basketball"),
-        League("NFL", "football/nfl", "American Football", "nfl"),
-        League("College Football", "football/college-football", "American Football", "nfl"),
-        League("NHL", "hockey/nhl", "Eishockey", "nhl"),
-        League("MLB", "baseball/mlb", "Baseball", "mlb"),
-        League("ATP", "tennis/atp", "Tennis", "tennis", KIND_TENNIS),
-        League("WTA", "tennis/wta", "Tennis", "tennis", KIND_TENNIS),
-        League("Formel 1", "racing/f1", "Motorsport", "f1", KIND_RACE),
-        League("UFC", "mma/ufc", "Kampfsport", "ufc", KIND_FIGHT),
-        League("PGA Tour", "golf/pga", "Golf", "golf", KIND_GOLF),
-        League("Cricket", "cricket", "Rugby & Cricket", "cricket", KIND_CRICKET)
+        League("Champions League", "soccer/uefa.champions", "Fußball", alias = "liga dos campeoes"),
+        League("Premier League", "soccer/eng.1", "Fußball", alias = "campeonato ingles"),
+        League("LaLiga", "soccer/esp.1", "Fußball", alias = "campeonato espanhol"),
+        League("Serie A", "soccer/ita.1", "Fußball", alias = "campeonato italiano"),
+        League("Bundesliga", "soccer/ger.1", "Fußball", alias = "campeonato alemao"),
+        League("Ligue 1", "soccer/fra.1", "Fußball", alias = "campeonato frances")
     ) + EXTRA_LEAGUES
 
     /** Names of the leagues that start switched off. */
     val EXTRA_NAMES: List<String> get() = EXTRA_LEAGUES.map { it.name }
 
     /** Popular competitions for the overview (shown if active). */
-    val POPULAR = listOf("Premier League", "Champions League", "Bundesliga", "LaLiga", "NBA", "NFL", "NHL", "MLB")
+    val POPULAR = listOf("Brasileirão Série A", "Brasileirão Série B", "Copa Libertadores", "Champions League", "Premier League", "LaLiga", "Serie A", "Bundesliga", "Ligue 1")
 
     fun league(name: String): League? = LEAGUES.firstOrNull { it.name == name }
     fun leagueOf(g: Game): League? = league(g.league)
