@@ -525,7 +525,6 @@ private fun GeneralPage(ctx: Context) {
         }
     }
     DnsSection(ctx)
-    VpnSection(ctx)
 }
 
 internal fun canStartFromBoot(ctx: Context): Boolean =
