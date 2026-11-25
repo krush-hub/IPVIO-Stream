@@ -159,7 +159,7 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
             .setReadTimeoutMs(15_000)
         // W-005/W-007: renderers wrapped for the subtitle and audio delay (no change while both are 0)
         ExoPlayer.Builder(ctx, PlayerSync.wrap(SoftAudio.factory(ctx)))
-            .setLoadControl(Mem.loadControl(ctx))
+            .setLoadControl(if (req.live) Mem.liveLoadControl(ctx) else Mem.loadControl(ctx))
             .setWakeMode(C.WAKE_MODE_NETWORK)
             // "tap://" = live buffer on the device (rewind, recording), everything else as before
             .setMediaSourceFactory(
@@ -737,11 +737,13 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                     else { msg = Lang.tr(playbackErrorText(e.errorCode, status, cur.live, TlsFallback.isHostMismatch(e))) + "  " + Lang.tr("Zurück mit der Zurück-Taste."); if (Boomer.enabled) boomerFail = true }
                 }
             }
+            override fun onRenderedFirstFrame() { forceLowStart(player, false) }
             override fun onPlaybackStateChanged(state: Int) {
                 pState = state
                 if (state == Player.STATE_BUFFERING || state == Player.STATE_READY) pError = false
                 buffering = state == Player.STATE_BUFFERING
                 if (state == Player.STATE_READY) {
+                    if (player.videoFormat == null) forceLowStart(player, false) // audio-only: no first frame will ever come
                     msg = null; retries = 0; boomerFail = false
                     if (player.duration > 0 && player.currentPosition < player.duration - 3000) endGuard = ""
                     if (!readyOnce) { readyOnce = true; DeadLinks.ok(ctx, cur.url) }
@@ -1895,11 +1897,22 @@ private fun NextPill(remain: () -> Long, auto: Boolean, showOk: Boolean, onClick
     PSkipPill(label + (if (showOk) "  (OK)" else ""), onClick = onClick)
 }
 
+/** Fast channel start: play the lowest video quality first, so the first frame comes at once;
+ *  the adaptive selection climbs to the best quality the connection supports afterwards.
+ *  Released on the first rendered frame (see the player listener); audio-only streams never
+ *  render a frame, so they are released when playback becomes ready instead. */
+internal fun forceLowStart(player: androidx.media3.exoplayer.ExoPlayer, on: Boolean) {
+    (player.trackSelectionParameters as? androidx.media3.exoplayer.trackselection.DefaultTrackSelector.Parameters)?.let {
+        player.trackSelectionParameters = it.buildUpon().setForceLowestBitrate(on).build()
+    }
+}
+
 /**
  * Open a stream. Media3 throws an IllegalStateException on setting if no source is built in for the format
  * (formerly with .mpd without the DASH module: crash on this line). false = not playable.
  */
 internal fun openStream(player: androidx.media3.exoplayer.ExoPlayer, url: String, startMs: Long, item: MediaItem? = null): Boolean = try {
+    forceLowStart(player, true)
     player.setMediaItem(item ?: MediaItem.fromUri(url), startMs)
     player.prepare()
     player.playWhenReady = true
