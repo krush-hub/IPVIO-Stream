@@ -211,18 +211,9 @@ fun Guide(
     )
     // Top: header + selected show on the left, the running picture on the right (PlayerScreen shrinks it to 400 × 225 dp, top right).
     // Below: categories and program grid across the full width – so several hours are visible at once.
+    // Transparent background: the video keeps showing through the guide (user's wish); the preview window stays.
     Column(
         Modifier.fillMaxSize()
-            .drawBehind {
-                val l = size.width - 424.dp.toPx(); val t = 20.dp.toPx()
-                val hole = androidx.compose.ui.geometry.RoundRect(l, t, l + 400.dp.toPx(), t + 225.dp.toPx(), androidx.compose.ui.geometry.CornerRadius(DS.RadiusM.toPx()))
-                val path = androidx.compose.ui.graphics.Path().apply {
-                    fillType = androidx.compose.ui.graphics.PathFillType.EvenOdd
-                    addRect(androidx.compose.ui.geometry.Rect(0f, 0f, size.width, size.height))
-                    addRoundRect(hole)
-                }
-                drawPath(path, Color(0xF7090B12))
-            }
             .padding(start = 24.dp, top = 14.dp, bottom = 10.dp, end = 24.dp)
     ) {
         Row(Modifier.fillMaxWidth().height(238.dp)) {
