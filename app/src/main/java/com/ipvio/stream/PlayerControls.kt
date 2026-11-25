@@ -50,7 +50,7 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.onSizeChanged
+import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -214,7 +214,7 @@ fun PSeekBar(
     var barW by remember { mutableStateOf(0) }
     Box(
         modifier.height(32.dp)
-            .onSizeChanged { barW = it.width }
+            .onPlaced { barW = it.size.width }
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, _ ->
                     val w = barW
