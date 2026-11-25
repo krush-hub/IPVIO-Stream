@@ -1468,18 +1468,9 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                                 val ci = curItem
                                 if (favMenu && ci != null) ChannelMenu(ci, null, null) { favMenu = false }
                             }
-                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.TRACKS)), label = "Audio & Untertitel", onLabel = setLabel, onClick = { togglePanel(Panel.TRACKS) }) {
-                                PlayerIcon(PIcon.AudioSubs, it)
-                            }
-                            PRoundButton(Modifier.focusRequester(btn.getValue(Panel.ASPECT)), label = "Bildformat", onLabel = setLabel, onClick = { togglePanel(Panel.ASPECT) }) {
-                                PlayerIcon(PIcon.Aspect, it)
-                            }
-                            // Second stream (round 22): without a second picture channel selection, otherwise the menu with arrangement, audio and swap
-                            PRoundButton(label = "Zusatzbild", onLabel = setLabel, onClick = {
-                                if (second == null) { pickSecond = true; controls = false; openChannels() } else togglePanel(Panel.MENU)
-                            }) {
-                                AppIcon(AIcon.Layers, it, size = 26.dp)
-                            }
+                            // Live: only play/pause, record, quality, guide, channels, favorites, catch-up.
+// Audio/subtitles, aspect and second picture were removed from the live bar (user's wish);
+// movies/series keep them (VOD row / settings).
                             // Live channel with several qualities: pick the stream (4K / Full HD / HD / SD).
                             // The button shows the current quality as red text instead of a meaningless icon.
                             if (cur.live && liveAlts.size > 1) {
@@ -1794,23 +1785,15 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
 
                 Panel.MENU -> PSimplePanel(440.dp, "Einstellungen", back, { closePanel() }, leftBack = panelParent != Panel.NONE) {
                     val entries = buildList<MenuEntry> {
-                        if (cur.live) add(MenuEntry(20, "Zusatzbild", second?.title ?: "Aus", false))
-                        if (cur.live && second != null) {
-                            add(MenuEntry(21, "Anordnung", if (splitMode == 1) "Geteilt" else "Bild-in-Bild", false))
-                            add(MenuEntry(22, "Ton von", if (audioOnSecond) "Zusatzbild" else "Hauptstream", false))
-                            if (splitMode == 0) {
-                                add(MenuEntry(24, "Fenstergröße", DualPrefs.SIZE_NAMES[DualPrefs.size], false))
-                                add(MenuEntry(25, "Position", DualPrefs.CORNER_NAMES[DualPrefs.corner], false))
-                            }
-                            add(MenuEntry(23, "Streams tauschen", null, false))
-                        }
                         add(MenuEntry(0, "Sprungweite", "${step / 1000} s", true))
                         add(MenuEntry(1, "Untertitel-Stil", null, true))
                         add(MenuEntry(30, "Untertitel-Verzögerung", PlayerSync.label(PlayerSync.subMs), true))
                         add(MenuEntry(31, "Ton-Verzögerung", PlayerSync.label(PlayerSync.avMs), true))
                         add(MenuEntry(2, "Videoqualität", currentAlts().size.takeIf { it > 1 }?.let { "$it Quellen" }, true))
-                        add(MenuEntry(3, "Wiedergabe-Tempo", speedLabel(SPEEDS[speedIdx]), true))
-                        add(MenuEntry(4, "Bildformat", ASPECTS[aspect].substringBefore(" ("), true))
+                        // Live only: no playback speed and no aspect ratio for a live channel;
+                        // movies/series keep both.
+                        if (!cur.live) add(MenuEntry(3, "Wiedergabe-Tempo", speedLabel(SPEEDS[speedIdx]), true))
+                        if (!cur.live) add(MenuEntry(4, "Bildformat", ASPECTS[aspect].substringBefore(" ("), true))
                         if (epList.size > 1) add(MenuEntry(5, "Nächste Folge automatisch", if (AppSettings.autoNext) "An" else "Aus", false))
                         if (epList.size > 1) add(MenuEntry(13, "Abspann überspringen", if (AppSettings.autoSkipOutro) "An" else "Aus", false))
                         add(MenuEntry(6, "Endzeit anzeigen", if (AppSettings.showEndTime) "An" else "Aus", false))
@@ -1841,18 +1824,6 @@ fun PlayerScreen(req: PlayReq, zapList: List<Item>, liveAll: List<Item>, seriesI
                                     11 -> techOn = !techOn
                                     13 -> AppSettings.setAutoOutro(ctx, !AppSettings.autoSkipOutro)
                                     9 -> { panel = Panel.NONE; panelParent = Panel.NONE; lastChannel() }
-                                    20 -> {
-                                        if (second != null) second = null
-                                        else { pickSecond = true; panel = Panel.NONE; panelParent = Panel.NONE; controls = false; openChannels() }
-                                    }
-                                    21 -> DualPrefs.set(ctx, split = 1 - DualPrefs.split)
-                                    22 -> DualPrefs.set(ctx, audio = !DualPrefs.audioSecond)
-                                    24 -> DualPrefs.set(ctx, size = (DualPrefs.size + 1) % DualPrefs.SIZES.size)
-                                    25 -> DualPrefs.set(ctx, corner = (DualPrefs.corner + 1) % DualPrefs.CORNER_NAMES.size)
-                                    23 -> {
-                                        val s2 = second; val m = curItem
-                                        if (s2 != null && m != null) { second = m; panel = Panel.NONE; panelParent = Panel.NONE; switchTo(s2, zapSrc) }
-                                    }
                                     5 -> AppSettings.setPlayerExtra(ctx, !AppSettings.autoNext, AppSettings.hideSec, AppSettings.showEndTime, AppSettings.autoSkipIntro)
                                     6 -> AppSettings.setPlayerExtra(ctx, AppSettings.autoNext, AppSettings.hideSec, !AppSettings.showEndTime, AppSettings.autoSkipIntro)
                                     else -> { /* no-op: "Extern öffnen" was removed (useless in the player) */ }
