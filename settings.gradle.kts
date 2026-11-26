@@ -23,4 +23,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "IPVIO Stream"
-include(":app")
+include(":app", ":baselineprofile")
